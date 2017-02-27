@@ -24,7 +24,7 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 
-	'mongo': ENV['MONGO_URI'] || "mongodb://localhost:27017/bitmarkit",
+	'mongo': process.env.MONGODB_URI || "mongodb://localhost:27017/bitmarkit",
 });
 
 // Load your project's Models
@@ -51,5 +51,5 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-console.log("DB:", ENV['MONGO_URI']);
+console.log("DB:", process.env.MONGODB_URI;
 keystone.start();
