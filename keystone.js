@@ -51,5 +51,5 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-
+console.log("DB:", process.env.MONGO_URI);
 keystone.start();
