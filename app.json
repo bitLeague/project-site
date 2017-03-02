@@ -1,0 +1,30 @@
+{
+  "name": "project-site",
+  "scripts": {
+  },
+  "env": {
+    "CLOUDINARY_URL": {
+      "required": true
+    },
+    "COOKIE_SECRET": {
+      "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "mongolab",
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
