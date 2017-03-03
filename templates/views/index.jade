@@ -1,7 +1,30 @@
 extends ../layouts/default
 
 block content
-	.container: .row: .col-xs-12
+	.jumbotron: .container: .row: .col-xs-12
 		h1 Welcome to BitLeague
+		p Derp derp marketing sandbox
 		<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-		p FUN TIMES
+	.container: .row 
+		.col-xs-12.col-sm-6
+			h2 A gentle introduction to Bitcoin
+			p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		.col-xs-12.col-sm-6
+			figure
+				img(class="img-responsive" src="http://static5.businessinsider.com/image/575e6969dd0895ed1d8b4598-1400/coindesk-bpi-chart%20(3).png")
+				figcaption Oh hey, some graph or bitcoiny image
+	div.bl-how-it-works: .container: .row
+		.col-xs-12
+			h2 Some Columns about how it works or something
+		.col-xs-12.col-sm-4
+			img(class="img-responsive" src="http://placekitten.com/g/300/200" style="width: 100%")
+			h3 How It Works
+			p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		.col-xs-12.col-sm-4
+			img(class="img-responsive" src="http://placekitten.com/g/300/200" style="width: 100%")
+			h3 How It Works
+			p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		.col-xs-12.col-sm-4
+			img(class="img-responsive" src="http://placekitten.com/g/300/200" style="width: 100%")
+			h3 Here's a responsive data-driven chart
+			<canvas id="myChart" width="400" height="400"></canvas>

@@ -6765,17 +6765,11 @@ button.close {
   }
 }
 body {
-  padding-top: 70px;
+  padding-top: 50px;
 }
 .navbar {
   margin-bottom: 0;
   border: none;
-}
-.collapse {
-  background: white;
-}
-.icon-bar {
-  background: black;
 }
 #footer {
   margin-top: 30px;
