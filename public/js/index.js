@@ -1,4 +1,14 @@
 $(document).ready(function() {
+    // Setup popovers
+    initBootstrapAddons();
+    initChart();
+});
+
+
+function initBootstrapAddons() {
+    $("[data-toggle=popover]").popover();
+}
+function initChart() {
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -38,4 +48,4 @@ $(document).ready(function() {
             maintainAspectRatio: true
         }
     });
-});
+}
