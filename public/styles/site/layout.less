@@ -1,19 +1,25 @@
-// Bootstrap menu mods
+// FONT IMPORT SHOULD GO IN DIFFERENT FILE
+@import url('https://fonts.googleapis.com/css?family=Hind|Montserrat');
+
+
+// Vars
+@bl-menu-height: 50px;
+@bl-menu-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
 body {
-    padding-top: 70px;
+    padding-top: @bl-menu-height;
 }
 
 .navbar {
     margin-bottom: 0;
     border: none;
+    -webkit-box-shadow: @bl-menu-box-shadow;
+    -moz-box-shadow: @bl-menu-box-shadow;
+    box-shadow: @bl-menu-box-shadow;
 }
 
-.collapse {
-    background: white;
-}
-
-.icon-bar {
-    background: black;
+.modal {
+    top: @bl-menu-height + 30px;
+    outline: none;
 }
 
 #footer {
