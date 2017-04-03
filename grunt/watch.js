@@ -1,7 +1,7 @@
 module.exports = {
 	express: {
 		files: [
-			'keystone.js',
+			'app.js',
 			'public/js/lib/**/*.{js,json}',
 		],
 		tasks: ['concurrent:dev'],

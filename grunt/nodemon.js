@@ -1,6 +1,6 @@
 module.exports = {
 	debug: {
-		script: 'keystone.js',
+		script: 'app.js',
 		options: {
 			nodeArgs: ['--debug'],
 			env: {
