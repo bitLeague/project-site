@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		nodemon: {
 			serve: {
-				script: 'keystone.js',
+				script: 'app.js',
 				options: {
 					ignore: ['node_modules/**'],
 				},
