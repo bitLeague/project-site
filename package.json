@@ -26,7 +26,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "node keystone.js"
+    "start": "node app.js"
   },
   "engines": {
     "node": "6.9.5",
