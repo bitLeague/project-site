@@ -10,7 +10,22 @@ app.post('/register', function(req, res, next) {
             console.error(err);
             return res.send(err);
         } else {
-            return res.send('success');
+            return res.send({"user" : req.body.user, "id" : result.insertId, "status":"success"});
+        }
+    });
+});
+
+app.post('/login', function(req, res, next) {
+    console.log('request received:', req.body);
+    
+    var query = db.query('select * from user where username = ? and password = ?',  [req.body.user, req.body.password], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.send(err);
+        }else if(result.length > 0) {
+            return res.send({"user" : result[0]["username"], "id" : result[0]["id"], "status":"success"});
+        }else{
+            return res.send('fail');
         }
     });
 });
