@@ -8,20 +8,11 @@
     },
     "COOKIE_SECRET": {
       "required": true
-    },
-    "MONGODB_URI": {
-      "required": true
-    },
-    "PAPERTRAIL_API_TOKEN": {
-      "required": true
     }
   },
   "formation": {
   },
-  "addons": [
-    "mongolab",
-    "papertrail"
-  ],
+  "addons": [],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
