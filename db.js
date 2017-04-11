@@ -1,12 +1,7 @@
 var mysql = require('mysql');
 var config = require('./config.json')
 
-var connection = mysql.createConnection({
-    host     : config.host,
-    user     : config.user,
-    password : config.password,
-    database : config.database
-});
+var connection = mysql.createConnection(process.env.JAWSDB_URL || config);
 
 connection.connect(function(err) {
     if (err) throw err;
