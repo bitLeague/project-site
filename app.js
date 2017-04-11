@@ -26,10 +26,6 @@ app.use(bodyParser.json())
 app.use(routes)
 app.use(models)
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
-
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('Listening on port ' + port);
