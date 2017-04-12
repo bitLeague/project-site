@@ -29,3 +29,15 @@ app.post('/login', function(req, res, next) {
         }
     });
 });
+
+app.post('/ticker', function(req, res, next) {
+    var request=require('request');
+
+    request.get('https://www.bitstamp.net/api/v2/ticker/btcusd/',function(err,response,body){
+      if(res.statusCode !== 200 || err){
+        return res.send('fail');
+      }else{
+        return res.send(response);
+      }
+    });
+});
