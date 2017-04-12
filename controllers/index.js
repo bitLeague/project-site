@@ -73,7 +73,17 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
         })
     }
 
+    $scope.getChartData= function(){
+        $http({
+            url: 'http://api.coindesk.com/v1/bpi/historical/close.json',
+            method: 'GET'
+        }).then(function (httpResponse) {
+            $scope.chartData = httpResponse.data.bpi;
+        })
+    }
+
     $scope.getTicker();
+    $scope.getChartData();
 
     setInterval(function(){ 
         $scope.getTicker();
