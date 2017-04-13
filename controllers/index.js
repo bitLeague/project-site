@@ -111,6 +111,8 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
                         "gains" : httpResponse.data.gains
                     });
                     $scope.user = userService.get();
+                    $scope.orders();
+                    $scope.leaders();
                 }else if(httpResponse.data == "fail"){
                     alert("Error: We could not process that order.");
                 }
@@ -120,8 +122,67 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
         }
     }
 
+    $scope.sell = function(){
+        if($scope.quantity <= $scope.user.bitcoin){
+
+            $http({
+                url: '/sell',
+                method: 'POST',
+                data: {"quantity": $scope.quantity, "ask": $scope.ticker.ask, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin}
+            }).then(function (httpResponse) {
+                console.log('response:', httpResponse);
+                if(httpResponse.data.status == "success"){
+                    userService.set({"username" : $scope.user.username,
+                        "id" : $scope.user.id,
+                        "cash" : httpResponse.data.cash,
+                        "bitcoin" : httpResponse.data.bitcoin,
+                        "gains" : httpResponse.data.gains
+                    });
+                    $scope.user = userService.get();
+                    $scope.orders();
+                    $scope.leaders();
+                }else if(httpResponse.data == "fail"){
+                    alert("Error: We could not process that order.");
+                }
+            })
+        }else{
+            alert("You cannot sell more Bitcoins than you currently have.");
+        }
+    }
+
+     $scope.orders= function(){
+        $http({
+            url: '/orders',
+            method: 'POST',
+            data: {"id":$scope.user.id}
+        }).then(function (httpResponse) {
+            console.log('response:', httpResponse);
+            if(httpResponse.data.status == "success"){
+                $scope.ordersArray =  httpResponse.data.orders;
+            }else if(httpResponse.data == "nothing"){
+                $scope.ordersArray = [];
+            }
+        })
+    }
+
+    $scope.leaders= function(){
+        $http({
+            url: '/leaders',
+            method: 'POST'
+        }).then(function (httpResponse) {
+            console.log('response:', httpResponse);
+            if(httpResponse.data.status == "success"){
+                $scope.leadersArray =  httpResponse.data.leaders;
+            }else if(httpResponse.data == "nothing"){
+                $scope.leadersArray = [];
+            }
+        })
+    }
+
     $scope.getTicker();
     $scope.getChartData();
+    $scope.orders();
+    $scope.leaders();
 
     setInterval(function(){ 
         $scope.getTicker();
