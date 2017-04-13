@@ -11,7 +11,11 @@ app.controller('myCtrl', function($scope,$http,$location,userService) {
             console.log('response:', httpResponse);
             if(httpResponse.data.status == "success"){
                 userService.set({"username" : httpResponse.data.user,
-                "id" : httpResponse.data.id});
+                    "id" : httpResponse.data.id,
+                    "cash" : httpResponse.data.cash,
+                    "bitcoin" : httpResponse.data.bitcoin,
+                    "gains" : httpResponse.data.gains
+                });
                 $location.path('/dashboard');
             }
         })
@@ -27,7 +31,11 @@ app.controller('myCtrl', function($scope,$http,$location,userService) {
             console.log('response:', httpResponse);
             if(httpResponse.data.status == "success"){
                 userService.set({"username" : httpResponse.data.user,
-                "id" : httpResponse.data.id});
+                    "id" : httpResponse.data.id,
+                    "cash" : httpResponse.data.cash,
+                    "bitcoin" : httpResponse.data.bitcoin,
+                    "gains" : httpResponse.data.gains
+                });
                 $location.path('/dashboard');
             }else if(httpResponse.data == "fail"){
                 $scope.errorMessage = 'Invalid username or password';
@@ -42,7 +50,11 @@ app.controller('myCtrl', function($scope,$http,$location,userService) {
 
 app.controller('dashboardController', function($scope,$http,$location,userService,tickerService) {
     $scope.user = userService.get();
-
+    
+    if(!$scope.user.id){
+        $location.path('/login');
+    }
+    
     $scope.getTicker= function(){
         $http({
             url: '/ticker',
@@ -80,6 +92,32 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
         }).then(function (httpResponse) {
             $scope.chartData = httpResponse.data.bpi;
         })
+    }
+
+    $scope.buy= function(){
+        if(($scope.quantity * $scope.ticker.bid) < $scope.user.cash){
+
+            $http({
+                url: '/buy',
+                method: 'POST',
+                data: {"quantity": $scope.quantity, "bid": $scope.ticker.bid, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin}
+            }).then(function (httpResponse) {
+                console.log('response:', httpResponse);
+                if(httpResponse.data.status == "success"){
+                    userService.set({"username" : $scope.user.username,
+                        "id" : $scope.user.id,
+                        "cash" : httpResponse.data.cash,
+                        "bitcoin" : httpResponse.data.bitcoin,
+                        "gains" : httpResponse.data.gains
+                    });
+                    $scope.user = userService.get();
+                }else if(httpResponse.data == "fail"){
+                    alert("Error: We could not process that order.");
+                }
+            })
+        }else{
+            alert("You don't have enough cash to complete this order. Please adjust the quantity.");
+        }
     }
 
     $scope.getTicker();

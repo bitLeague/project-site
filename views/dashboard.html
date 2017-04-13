@@ -12,4 +12,18 @@
 <div>
 	<h4>Chart Data (Historical 30 Day)</h4>
 	{{chartData}}
+	</br>
+</div>
+<div>
+	<h4>Account Details</h4>
+	Cash Balance: {{user.cash}} </br>
+	Bitcoin Balance: {{user.bitcoin}} </br>
+	Total Gains (Losses): {{user.gains}} </br>
+</div>
+<div>
+	<h4>Trade Center</h4>
+	Order Type: Market Order </br>
+	Quantity <input type="text" ng-model="quantity"> </br>
+	<input type="button" value="Buy" ng-click="buy()"> {{ticker.bid}} </br>
+	<input type="button" value="Sell" ng-click="sell()"> {{ticker.ask}} </br>
 </div>
