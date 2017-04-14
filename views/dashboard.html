@@ -1,3 +1,51 @@
 <div>
-	<p>Welcome to the Trading Dashboard, {{user.username}}!<p>
+	<p>Welcome to the Trading Dashboard, {{user.username}}! <a ng-click="logOut()" href="">Log Out</a><p>
+</div>
+<div>
+	<h4>Market Snapshot</h4>
+	Bid: {{ticker.bid}} </br>
+	Ask: {{ticker.ask}} </br>
+	Last Price: {{ticker.last}} </br>
+	24 Hour Volume: {{ticker.volume}} </br>
+	24 Hour High/Low: {{ticker.high}}/{{ticker.low}} </br>
+</div>
+<div>
+	<h4>Chart Data (Historical 30 Day)</h4>
+	{{chartData}}
+	</br>
+</div>
+<div>
+	<h4>Account Details</h4>
+	Cash Balance: {{user.cash}} </br>
+	Bitcoin Balance: {{user.bitcoin}} </br>
+	Total Gains (Losses): {{user.gains}} </br>
+</div>
+<div>
+	<h4>Trade Center</h4>
+	Order Type: Market Order </br>
+	Quantity <input type="text" ng-model="quantity"> </br>
+	<input type="button" value="Buy" ng-click="buy()"> {{ticker.bid}} </br>
+	<input type="button" value="Sell" ng-click="sell()"> {{ticker.ask}} </br>
+</div>
+<div>
+	<h4>Order History (Last 10)</h4>
+	 <div class="list-group">
+        <a ng-repeat="transaction in ordersArray" 
+            class="list-group-item">
+          {{ transaction }}</br></a>
+     </div></br>
+</div>
+<div>
+	<h4>Leaders</h4>
+	 <div class="list-group">
+        <a ng-repeat="leader in leadersArray" 
+            class="list-group-item">
+          {{ leader }}</br></a>
+     </div></br>
+</div>
+<div>
+	<h4>Reports</h4>
+	<a ng-click="userTransactionReport()" href="">Your Transactions</a></br>
+	<a ng-click="systemTransactionReport()" href="">System's Recent Transactions</a></br>
+	<a ng-click="leaderboardReport()" href="">Full Leaderboard</a></br>
 </div>
