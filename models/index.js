@@ -5,12 +5,21 @@ var db = require('../db.js')
 app.post('/register', function(req, res, next) {
     console.log('request received:', req.body);
     
-    var query = db.query('insert into user set name = ?, email = ?, username = ?, password = ?',  [req.body.name, req.body.email, req.body.user, req.body.password], function (err, result) {
+    var check_query = db.query('select * from user where username = ?',  [req.body.user], function (err, result) {
         if (err) {
             console.error(err);
             return res.send(err);
-        } else {
-            return res.send({"user" : req.body.user, "id" : result.insertId, "status":"success"});
+        }else if(result.length > 0) {
+            return res.send({"error":"Username already exists. Please choose a different username."});
+        }else{
+            var query = db.query('insert into user set name = ?, email = ?, username = ?, password = ?',  [req.body.name, req.body.email, req.body.user, req.body.password], function (err, result) {
+                if (err) {
+                    console.error(err);
+                    return res.send(err);
+                } else {
+                    return res.send({"user" : req.body.user, "id" : result.insertId, "cash" : 100000.00, "bitcoin" : 0, "gains" : 0.00, "status":"success"});
+                }
+            });
         }
     });
 });
@@ -115,6 +124,63 @@ app.post('/leaders', function(req, res, next) {
     console.log('request received:', req.body);
     
     var query = db.query('select * from user order by `gains` desc limit 10 ', function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.send(err);
+        }else if(result.length > 0) {
+            var leadersArr = [];
+            for(var i in result){
+                leadersArr.push({"username" : result[i]["username"], "gains" : result[i]["gains"]});
+            }
+            return res.send({"leaders":leadersArr, "status":"success"});
+        }else{
+            return res.send('nothing');
+        }
+    });
+});
+
+app.post('/usertransactionreport', function(req, res, next) {
+    console.log('request received:', req.body);
+    
+    var query = db.query('select * from orders where user_id = ? order by `time` desc ',  [req.body.id], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.send(err);
+        }else if(result.length > 0) {
+            var ordersArr = [];
+            for(var i in result){
+                ordersArr.push({"time" : result[i]["time"], "action" : result[i]["action"], "quantity" : result[i]["quantity"], "type" : result[i]["type"], "price" : result[i]["price"], "status" : result[i]["status"]});
+            }
+            return res.send({"orders":ordersArr, "status":"success"});
+        }else{
+            return res.send('nothing');
+        }
+    });
+});
+
+app.post('/systemtransactionreport', function(req, res, next) {
+    console.log('request received:', req.body);
+    
+    var query = db.query('select * from orders join user on id=user_id order by `time` desc limit 500 ',  [req.body.id], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.send(err);
+        }else if(result.length > 0) {
+            var ordersArr = [];
+            for(var i in result){
+                ordersArr.push({"username":result[i]["username"], "time" : result[i]["time"], "action" : result[i]["action"], "quantity" : result[i]["quantity"], "type" : result[i]["type"], "price" : result[i]["price"], "status" : result[i]["status"]});
+            }
+            return res.send({"orders":ordersArr, "status":"success"});
+        }else{
+            return res.send('nothing');
+        }
+    });
+});
+
+app.post('/leadersreport', function(req, res, next) {
+    console.log('request received:', req.body);
+    
+    var query = db.query('select * from user order by `gains` desc', function (err, result) {
         if (err) {
             console.error(err);
             return res.send(err);

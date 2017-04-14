@@ -1,5 +1,5 @@
 <div>
-	<p>Welcome to the Trading Dashboard, {{user.username}}!<p>
+	<p>Welcome to the Trading Dashboard, {{user.username}}! <a ng-click="logOut()" href="">Log Out</a><p>
 </div>
 <div>
 	<h4>Market Snapshot</h4>
@@ -42,4 +42,10 @@
             class="list-group-item">
           {{ leader }}</br></a>
      </div></br>
+</div>
+<div>
+	<h4>Reports</h4>
+	<a ng-click="userTransactionReport()" href="">Your Transactions</a></br>
+	<a ng-click="systemTransactionReport()" href="">System's Recent Transactions</a></br>
+	<a ng-click="leaderboardReport()" href="">Full Leaderboard</a></br>
 </div>

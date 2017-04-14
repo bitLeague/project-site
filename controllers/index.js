@@ -17,6 +17,8 @@ app.controller('myCtrl', function($scope,$http,$location,userService) {
                     "gains" : httpResponse.data.gains
                 });
                 $location.path('/dashboard');
+            }else if(httpResponse.data.error){
+                $scope.errorMessage = httpResponse.data.error;
             }
         })
     }
@@ -48,7 +50,8 @@ app.controller('myCtrl', function($scope,$http,$location,userService) {
     }
  });
 
-app.controller('dashboardController', function($scope,$http,$location,userService,tickerService) {
+app.controller('dashboardController', function($scope,$http,$location,userService,tickerService,reportService) {
+    // Get user information, if none, redirect to login
     $scope.user = userService.get();
     
     if(!$scope.user.id){
@@ -179,6 +182,59 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
         })
     }
 
+    $scope.userTransactionReport = function(){
+        $http({
+            url: '/usertransactionreport',
+            method: 'POST',
+            data: {"id":$scope.user.id}
+        }).then(function (httpResponse) {
+            console.log('response:', httpResponse);
+            if(httpResponse.data.status == "success"){
+                reportService.set("",[]);
+                reportService.set("Your Transactions", httpResponse.data.orders);
+            }else if(httpResponse.data == "nothing"){
+                reportService.set("Your Transactions", []);
+            }
+            $location.path('/reports');
+        })
+    }
+
+    $scope.systemTransactionReport = function(){
+        $http({
+            url: '/systemtransactionreport',
+            method: 'POST'
+        }).then(function (httpResponse) {
+            console.log('response:', httpResponse);
+            if(httpResponse.data.status == "success"){
+                reportService.set("",[]);
+                reportService.set("System's Recent Transactions", httpResponse.data.orders);
+            }else if(httpResponse.data == "nothing"){
+                reportService.set("System's Recent Transactions", []);
+            }
+            $location.path('/reports');
+        })
+    }
+
+    $scope.leaderboardReport = function(){
+        $http({
+            url: '/leadersreport',
+            method: 'POST',
+        }).then(function (httpResponse) {
+            console.log('response:', httpResponse);
+            if(httpResponse.data.status == "success"){
+                reportService.set("",[]);
+                reportService.set("Full Leaderboard", httpResponse.data.leaders);
+            }else if(httpResponse.data == "nothing"){
+                reportService.set("Full Leaderboard", []);
+            }
+            $location.path('/reports');
+        })
+    }
+
+    $scope.logOut= function(){
+        $location.path('/login');
+    }
+
     $scope.getTicker();
     $scope.getChartData();
     $scope.orders();
@@ -188,6 +244,22 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
         $scope.getTicker();
         $scope.ticker = tickerService.get();    
     }, 10000);
+});
+
+app.controller('reportsController', function($scope,$http,$location,userService,reportService) {
+    // Get user information, if none, redirect to login
+    $scope.user = userService.get();
+    
+    if(!$scope.user.id){
+        $location.path('/login');
+    }
+
+    $scope.reportName = reportService.getName();
+    $scope.rowsArray = reportService.getData();
+
+    $scope.loadDashboard= function(){
+        $location.path('/dashboard');
+    }
 });
 
 app.factory('userService', function() {
@@ -222,12 +294,37 @@ app.factory('tickerService', function() {
     }
 });
 
+app.factory('reportService', function() {
+    var reportName;
+    var reportData = [];
+    
+    function set(name, data) {
+        reportName = name;
+        reportData = data;
+    }
+    function getData() {
+        return reportData;
+    }
+    function getName() {
+        return reportName;
+    }
+    return {
+        set: set,
+        getData: getData,
+        getName: getName
+    }
+});
+
  // Define routes for the module.
 app.config(function ($routeProvider) {
     $routeProvider
     .when('/dashboard', {
         controller: 'dashboardController',
         templateUrl: '/views/dashboard.html'
+    })
+    .when('/reports', {
+        controller: 'reportsController',
+        templateUrl: '/views/reports.html'
     })
     .when('/login', {
         controller: 'myCtrl',
