@@ -207,3 +207,15 @@ app.post('/ticker', function(req, res, next) {
       }
     });
 });
+
+app.post('/chart', function(req, res, next) {
+    var request=require('request');
+
+    request.get('http://api.coindesk.com/v1/bpi/historical/close.json',function(err,response,body){
+      if(res.statusCode !== 200 || err){
+        return res.send('fail');
+      }else{
+        return res.send(response.body);
+      }
+    });
+});

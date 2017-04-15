@@ -90,8 +90,8 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
 
     $scope.getChartData= function(){
         $http({
-            url: 'https://api.coindesk.com/v1/bpi/historical/close.json',
-            method: 'GET'
+            url: '/chart',
+            method: 'POST'
         }).then(function (httpResponse) {
             $scope.chartData = httpResponse.data.bpi;
         })
