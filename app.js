@@ -4,7 +4,6 @@ var routes = require('./routes/')
 var models = require('./models/')
 var path = require('path')
 var db = require('./db')
-var config = require('./config.json')
 var mysql = require('mysql')
 var app = express()
 var bodyParser = require('body-parser')
@@ -25,10 +24,6 @@ app.use(bodyParser.json())
 
 app.use(routes)
 app.use(models)
-
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
 
 let port = process.env.PORT || 3000;
 app.listen(port, function () {
