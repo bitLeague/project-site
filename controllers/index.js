@@ -1,237 +1,250 @@
-var app = angular.module('myApp', ['ngRoute']);
-app.controller('myCtrl', function($scope,$http,$location,userService) {
+var app = angular.module('myApp', ['ngRoute', 'chart.js']);
+app.controller('myCtrl', function($scope, $http, $location, userService) {
 
-    $scope.submit= function(){
+    $scope.submit = function() {
         console.log('clicked submit');
         $http({
             url: '/register',
             method: 'POST',
             data: $scope.data
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                userService.set({"username" : httpResponse.data.user,
-                    "id" : httpResponse.data.id,
-                    "cash" : httpResponse.data.cash,
-                    "bitcoin" : httpResponse.data.bitcoin,
-                    "gains" : httpResponse.data.gains
+            if (httpResponse.data.status == "success") {
+                userService.set({
+                    "username": httpResponse.data.user,
+                    "id": httpResponse.data.id,
+                    "cash": httpResponse.data.cash,
+                    "bitcoin": httpResponse.data.bitcoin,
+                    "gains": httpResponse.data.gains
                 });
                 $location.path('/dashboard');
-            }else if(httpResponse.data.error){
+            } else if (httpResponse.data.error) {
                 $scope.errorMessage = httpResponse.data.error;
             }
         })
     }
 
-    $scope.login= function(){
+    $scope.login = function() {
         console.log('clicked submit');
         $http({
             url: '/login',
             method: 'POST',
             data: $scope.data
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                userService.set({"username" : httpResponse.data.user,
-                    "id" : httpResponse.data.id,
-                    "cash" : httpResponse.data.cash,
-                    "bitcoin" : httpResponse.data.bitcoin,
-                    "gains" : httpResponse.data.gains
+            if (httpResponse.data.status == "success") {
+                userService.set({
+                    "username": httpResponse.data.user,
+                    "id": httpResponse.data.id,
+                    "cash": httpResponse.data.cash,
+                    "bitcoin": httpResponse.data.bitcoin,
+                    "gains": httpResponse.data.gains
                 });
                 $location.path('/dashboard');
-            }else if(httpResponse.data == "fail"){
+            } else if (httpResponse.data == "fail") {
                 $scope.errorMessage = 'Invalid username or password';
             }
         })
     }
 
-    $scope.loadregistration= function(){
+    $scope.loadregistration = function() {
         $location.path('/register');
     }
- });
+});
 
-app.controller('dashboardController', function($scope,$http,$location,userService,tickerService,reportService) {
+app.controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService) {
     // Get user information, if none, redirect to login
     $scope.user = userService.get();
-    
-    if(!$scope.user.id){
+
+    if (!$scope.user.id) {
         $location.path('/login');
     }
-    
-    $scope.getTicker= function(){
+
+    $scope.getTicker = function() {
         $http({
             url: '/ticker',
             method: 'POST'
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
 
-            if(httpResponse.data.status != "fail"){
+            if (httpResponse.data.status != "fail") {
                 var tickerJson = angular.fromJson(httpResponse.data.body);
-                
-                tickerService.set({"bid" : tickerJson.bid,
-                    "ask" : tickerJson.ask,
-                    "high" : tickerJson.high,
-                    "low" : tickerJson.low,
-                    "volume" : tickerJson.volume,
-                    "last" : tickerJson.last
+
+                tickerService.set({
+                    "bid": tickerJson.bid,
+                    "ask": tickerJson.ask,
+                    "high": tickerJson.high,
+                    "low": tickerJson.low,
+                    "volume": tickerJson.volume,
+                    "last": tickerJson.last
                 });
-            }else{
+            } else {
                 // in case ticker api fails, fill in static data
-                tickerService.set({"bid" : 1219.37,
-                    "ask" : 1220.03,
-                    "high" : 1229.00,
-                    "low" : 1198.02,
-                    "volume" : 3418.96841667,
-                    "last" : 1220.46
+                tickerService.set({
+                    "bid": 1219.37,
+                    "ask": 1220.03,
+                    "high": 1229.00,
+                    "low": 1198.02,
+                    "volume": 3418.96841667,
+                    "last": 1220.46
                 });
             }
             $scope.ticker = tickerService.get();
         })
     }
 
-    $scope.getChartData= function(){
+    $scope.getChartData = function() {
         $http({
             url: '/chart',
             method: 'POST'
-        }).then(function (httpResponse) {
-            $scope.chartData = httpResponse.data.bpi;
+        }).then(function(httpResponse) {
+            $scope.labels = [];
+            $scope.data = [[]]; // Assign empty array to first index for chart js
+            // Need to add defined check
+            angular.forEach(httpResponse.data.bpi, function(value, key) {
+                $scope.labels.push(key);
+                $scope.data[0].push(value);
+            });
+            
         })
     }
 
-    $scope.buy= function(){
-        if(($scope.quantity * $scope.ticker.bid) < $scope.user.cash){
+    $scope.buy = function() {
+        if (($scope.quantity * $scope.ticker.bid) < $scope.user.cash) {
 
             $http({
                 url: '/buy',
                 method: 'POST',
-                data: {"quantity": $scope.quantity, "bid": $scope.ticker.bid, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin}
-            }).then(function (httpResponse) {
+                data: { "quantity": $scope.quantity, "bid": $scope.ticker.bid, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin }
+            }).then(function(httpResponse) {
                 console.log('response:', httpResponse);
-                if(httpResponse.data.status == "success"){
-                    userService.set({"username" : $scope.user.username,
-                        "id" : $scope.user.id,
-                        "cash" : httpResponse.data.cash,
-                        "bitcoin" : httpResponse.data.bitcoin,
-                        "gains" : httpResponse.data.gains
+                if (httpResponse.data.status == "success") {
+                    userService.set({
+                        "username": $scope.user.username,
+                        "id": $scope.user.id,
+                        "cash": httpResponse.data.cash,
+                        "bitcoin": httpResponse.data.bitcoin,
+                        "gains": httpResponse.data.gains
                     });
                     $scope.user = userService.get();
                     $scope.orders();
                     $scope.leaders();
-                }else if(httpResponse.data == "fail"){
+                } else if (httpResponse.data == "fail") {
                     alert("Error: We could not process that order.");
                 }
             })
-        }else{
+        } else {
             alert("You don't have enough cash to complete this order. Please adjust the quantity.");
         }
     }
 
-    $scope.sell = function(){
-        if($scope.quantity <= $scope.user.bitcoin){
+    $scope.sell = function() {
+        if ($scope.quantity <= $scope.user.bitcoin) {
 
             $http({
                 url: '/sell',
                 method: 'POST',
-                data: {"quantity": $scope.quantity, "ask": $scope.ticker.ask, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin}
-            }).then(function (httpResponse) {
+                data: { "quantity": $scope.quantity, "ask": $scope.ticker.ask, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin }
+            }).then(function(httpResponse) {
                 console.log('response:', httpResponse);
-                if(httpResponse.data.status == "success"){
-                    userService.set({"username" : $scope.user.username,
-                        "id" : $scope.user.id,
-                        "cash" : httpResponse.data.cash,
-                        "bitcoin" : httpResponse.data.bitcoin,
-                        "gains" : httpResponse.data.gains
+                if (httpResponse.data.status == "success") {
+                    userService.set({
+                        "username": $scope.user.username,
+                        "id": $scope.user.id,
+                        "cash": httpResponse.data.cash,
+                        "bitcoin": httpResponse.data.bitcoin,
+                        "gains": httpResponse.data.gains
                     });
                     $scope.user = userService.get();
                     $scope.orders();
                     $scope.leaders();
-                }else if(httpResponse.data == "fail"){
+                } else if (httpResponse.data == "fail") {
                     alert("Error: We could not process that order.");
                 }
             })
-        }else{
+        } else {
             alert("You cannot sell more Bitcoins than you currently have.");
         }
     }
 
-     $scope.orders= function(){
+    $scope.orders = function() {
         $http({
             url: '/orders',
             method: 'POST',
-            data: {"id":$scope.user.id}
-        }).then(function (httpResponse) {
+            data: { "id": $scope.user.id }
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                $scope.ordersArray =  httpResponse.data.orders;
-            }else if(httpResponse.data == "nothing"){
+            if (httpResponse.data.status == "success") {
+                $scope.ordersArray = httpResponse.data.orders;
+            } else if (httpResponse.data == "nothing") {
                 $scope.ordersArray = [];
             }
         })
     }
 
-    $scope.leaders= function(){
+    $scope.leaders = function() {
         $http({
             url: '/leaders',
             method: 'POST'
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                $scope.leadersArray =  httpResponse.data.leaders;
-            }else if(httpResponse.data == "nothing"){
+            if (httpResponse.data.status == "success") {
+                $scope.leadersArray = httpResponse.data.leaders;
+            } else if (httpResponse.data == "nothing") {
                 $scope.leadersArray = [];
             }
         })
     }
 
-    $scope.userTransactionReport = function(){
+    $scope.userTransactionReport = function() {
         $http({
             url: '/usertransactionreport',
             method: 'POST',
-            data: {"id":$scope.user.id}
-        }).then(function (httpResponse) {
+            data: { "id": $scope.user.id }
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                reportService.set("",[]);
+            if (httpResponse.data.status == "success") {
+                reportService.set("", []);
                 reportService.set("Your Transactions", httpResponse.data.orders);
-            }else if(httpResponse.data == "nothing"){
+            } else if (httpResponse.data == "nothing") {
                 reportService.set("Your Transactions", []);
             }
             $location.path('/reports');
         })
     }
 
-    $scope.systemTransactionReport = function(){
+    $scope.systemTransactionReport = function() {
         $http({
             url: '/systemtransactionreport',
             method: 'POST'
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                reportService.set("",[]);
+            if (httpResponse.data.status == "success") {
+                reportService.set("", []);
                 reportService.set("System's Recent Transactions", httpResponse.data.orders);
-            }else if(httpResponse.data == "nothing"){
+            } else if (httpResponse.data == "nothing") {
                 reportService.set("System's Recent Transactions", []);
             }
             $location.path('/reports');
         })
     }
 
-    $scope.leaderboardReport = function(){
+    $scope.leaderboardReport = function() {
         $http({
             url: '/leadersreport',
             method: 'POST',
-        }).then(function (httpResponse) {
+        }).then(function(httpResponse) {
             console.log('response:', httpResponse);
-            if(httpResponse.data.status == "success"){
-                reportService.set("",[]);
+            if (httpResponse.data.status == "success") {
+                reportService.set("", []);
                 reportService.set("Full Leaderboard", httpResponse.data.leaders);
-            }else if(httpResponse.data == "nothing"){
+            } else if (httpResponse.data == "nothing") {
                 reportService.set("Full Leaderboard", []);
             }
             $location.path('/reports');
         })
     }
 
-    $scope.logOut= function(){
+    $scope.logOut = function() {
         $location.path('/login');
     }
 
@@ -240,34 +253,45 @@ app.controller('dashboardController', function($scope,$http,$location,userServic
     $scope.orders();
     $scope.leaders();
 
-    setInterval(function(){ 
+    setInterval(function() {
         $scope.getTicker();
-        $scope.ticker = tickerService.get();    
+        $scope.ticker = tickerService.get();
     }, 10000);
+
+    $scope.onClick = function(points, evt) {
+        console.log(points, evt);
+    };
+    $scope.options = {
+        elements: { line: { tension: 0 } }
+    };
+    $scope.series = ["US$"];
+
+    // End chart test
 });
 
-app.controller('reportsController', function($scope,$http,$location,userService,reportService) {
+app.controller('reportsController', function($scope, $http, $location, userService, reportService) {
     // Get user information, if none, redirect to login
     $scope.user = userService.get();
-    
-    if(!$scope.user.id){
+
+    if (!$scope.user.id) {
         $location.path('/login');
     }
 
     $scope.reportName = reportService.getName();
     $scope.rowsArray = reportService.getData();
 
-    $scope.loadDashboard= function(){
+    $scope.loadDashboard = function() {
         $location.path('/dashboard');
     }
 });
 
 app.factory('userService', function() {
     var userData = {};
-    
+
     function set(data) {
         userData = data;
     }
+
     function get() {
         return userData;
     }
@@ -280,10 +304,11 @@ app.factory('userService', function() {
 
 app.factory('tickerService', function() {
     var tickerData = {};
-    
+
     function set(data) {
         tickerData = data;
     }
+
     function get() {
         return tickerData;
     }
@@ -297,14 +322,16 @@ app.factory('tickerService', function() {
 app.factory('reportService', function() {
     var reportName;
     var reportData = [];
-    
+
     function set(name, data) {
         reportName = name;
         reportData = data;
     }
+
     function getData() {
         return reportData;
     }
+
     function getName() {
         return reportName;
     }
@@ -315,26 +342,26 @@ app.factory('reportService', function() {
     }
 });
 
- // Define routes for the module.
-app.config(function ($routeProvider) {
+// Define routes for the module.
+app.config(function($routeProvider) {
     $routeProvider
-    .when('/dashboard', {
-        controller: 'dashboardController',
-        templateUrl: '/views/dashboard.html'
-    })
-    .when('/reports', {
-        controller: 'reportsController',
-        templateUrl: '/views/reports.html'
-    })
-    .when('/login', {
-        controller: 'myCtrl',
-        templateUrl: '/views/login.html'
-    })
-    .when('/register', {
-        controller: 'myCtrl',
-        templateUrl: '/views/register.html'
-    })
-    .otherwise({
-        redirectTo: '/login'
-    });
+        .when('/dashboard', {
+            controller: 'dashboardController',
+            templateUrl: '/views/dashboard.html'
+        })
+        .when('/reports', {
+            controller: 'reportsController',
+            templateUrl: '/views/reports.html'
+        })
+        .when('/login', {
+            controller: 'myCtrl',
+            templateUrl: '/views/login.html'
+        })
+        .when('/register', {
+            controller: 'myCtrl',
+            templateUrl: '/views/register.html'
+        })
+        .otherwise({
+            redirectTo: '/login'
+        });
 });
