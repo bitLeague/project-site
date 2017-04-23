@@ -1,9 +1,9 @@
 var express = require('express')
 var cons = require('consolidate')
-var routes = require('./routes/')
-var models = require('./models/')
+var routes = require('./server/routes/')
+var models = require('./server/models/')
 var path = require('path')
-var db = require('./db')
+var db = require('./server/db')
 var mysql = require('mysql')
 var app = express()
 var bodyParser = require('body-parser')
@@ -16,7 +16,6 @@ app.set('view engine', 'html');
 // allows access to the following folders from html
 app.use("/node_modules", express.static('node_modules'));
 app.use("/public", express.static('public'));
-app.use("/controllers", express.static('controllers'));
 
 // request body parser
 app.use(bodyParser.urlencoded({ extended: false }))
