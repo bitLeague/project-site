@@ -6,6 +6,7 @@
     "angular": "^1.6.4",
     "angular-chart.js": "1.1.1",
     "angular-route": "1.6.4",
+    "angular-strap": "2.3.12",
     "async": "^1.5.0",
     "body-parser": "^1.17.1",
     "consolidate": "^0.14.5",

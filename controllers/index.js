@@ -1,6 +1,11 @@
-var app = angular.module('myApp', ['ngRoute', 'chart.js']);
-app.controller('myCtrl', function($scope, $http, $location, userService) {
+var app = angular.module('myApp', ['ngRoute', 'chart.js', 'mgcrea.ngStrap']);
+app.controller('myCtrl', function($scope, $http, $location, userService, $sce) {
 
+    $scope.alert = {
+        "title": "Holy guacamole!",
+        "content": $sce.trustAsHtml("HI"),
+        "type": "info"
+    };
     $scope.submit = function() {
         console.log('clicked submit');
         $http({
@@ -98,13 +103,15 @@ app.controller('dashboardController', function($scope, $http, $location, userSer
             method: 'POST'
         }).then(function(httpResponse) {
             $scope.labels = [];
-            $scope.data = [[]]; // Assign empty array to first index for chart js
+            $scope.data = [
+                []
+            ]; // Assign empty array to first index for chart js
             // Need to add defined check
             angular.forEach(httpResponse.data.bpi, function(value, key) {
                 $scope.labels.push(key);
                 $scope.data[0].push(value);
             });
-            
+
         })
     }
 
