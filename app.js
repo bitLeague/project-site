@@ -10,12 +10,12 @@ var bodyParser = require('body-parser')
 
 // view engine setup
 app.engine('html', cons.swig)
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'html');
 
 // allows access to the following folders from html
 app.use("/node_modules", express.static('node_modules'));
-app.use("/views", express.static('views'));
+app.use("/public", express.static('public'));
 app.use("/controllers", express.static('controllers'));
 
 // request body parser

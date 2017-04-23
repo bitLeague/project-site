@@ -347,19 +347,19 @@ app.config(function($routeProvider) {
     $routeProvider
         .when('/dashboard', {
             controller: 'dashboardController',
-            templateUrl: '/views/dashboard.html'
+            templateUrl: '/public/dashboard.html'
         })
         .when('/reports', {
             controller: 'reportsController',
-            templateUrl: '/views/reports.html'
+            templateUrl: '/public/reports.html'
         })
         .when('/login', {
             controller: 'myCtrl',
-            templateUrl: '/views/login.html'
+            templateUrl: '/public/login.html'
         })
         .when('/register', {
             controller: 'myCtrl',
-            templateUrl: '/views/register.html'
+            templateUrl: '/public/register.html'
         })
         .otherwise({
             redirectTo: '/login'
