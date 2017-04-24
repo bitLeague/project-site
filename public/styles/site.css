@@ -6742,3 +6742,6 @@ body {
   padding-top: 30px;
   color: #777777;
 }
+.dash-header {
+  color: red !important;
+}

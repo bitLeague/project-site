@@ -3,7 +3,7 @@ angular.module('myApp.core').config(function($routeProvider) {
     $routeProvider
         .when('/dashboard', {
             controller: 'dashboardController',
-            templateUrl: '/public/dashboard.html'
+            templateUrl: '/public/app/dashboard/dashboard.html'
         })
         .when('/reports', {
             controller: 'reportsController',
