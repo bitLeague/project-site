@@ -11,5 +11,5 @@ angular
         /*
          * 3rd Party modules
          */
-        'chart.js', 'mgcrea.ngStrap'
+        'chart.js', 'mgcrea.ngStrap', 'ui.grid'
     ]);
