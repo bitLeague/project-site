@@ -46,8 +46,4 @@ angular
             }
         })
     }
-
-    $scope.loadregistration = function() {
-        $location.path('/register');
-    }
 });
