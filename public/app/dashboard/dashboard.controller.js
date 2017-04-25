@@ -1,5 +1,5 @@
 angular
-    .module('myApp.dashboard', [])
+    .module('myApp.dashboard')
     .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService) {
         // Get user information, if none, redirect to login
         $scope.user = userService.get();

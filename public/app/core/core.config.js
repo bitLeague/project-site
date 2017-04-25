@@ -1,10 +1,6 @@
 // Define routes for the module.
 angular.module('myApp.core').config(function($routeProvider) {
     $routeProvider
-        .when('/dashboard', {
-            controller: 'dashboardController',
-            templateUrl: '/public/app/dashboard/dashboard.html'
-        })
         .when('/reports', {
             controller: 'reportsController',
             templateUrl: '/public/reports.html'
