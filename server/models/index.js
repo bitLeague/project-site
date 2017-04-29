@@ -39,6 +39,21 @@ app.post('/login', function(req, res, next) {
     });
 });
 
+app.post('/getUser', function(req, res, next) {
+    console.log('request received:', req.body);
+    
+    var query = db.query('select * from user where username = ?',  [req.body.user], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.send(err);
+        }else if(result.length > 0) {
+            return res.send({"user" : result[0]["username"], "id" : result[0]["id"], "cash" : result[0]["cash"], "bitcoin" : result[0]["bitcoin"], "gains" : result[0]["gains"], "status":"success"});
+        }else{
+            return res.send('fail');
+        }
+    });
+});
+
 app.post('/buy', function(req, res, next) {
     console.log('request received:', req.body);
     var cash = parseFloat(req.body.cash);

@@ -7,7 +7,7 @@ module.exports = {
 		tasks: ['concurrent:dev'],
 	},
 	less: {
-		files: ['public/styles/**/*.less'],
+		files: ['public/**/*.less'],
 		tasks: ['less'],
 	},
 	livereload: {

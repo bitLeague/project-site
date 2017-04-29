@@ -6742,6 +6742,10 @@ body {
   padding-top: 30px;
   color: #777777;
 }
+.myGrid {
+  width: 500px;
+  height: 250px;
+}
 .dash-header {
   color: red !important;
 }

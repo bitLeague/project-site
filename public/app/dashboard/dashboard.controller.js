@@ -1,13 +1,48 @@
 angular
     .module('myApp.dashboard')
-    .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService) {
-        // Get user information, if none, redirect to login
-        $scope.user = userService.get();
+    .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService, utilities) {
+        var userCookie = utilities.getCookie('bitleague');
+        console.log("COOKIE", userCookie);
 
-        if (!$scope.user.id) {
+
+        if (userCookie) {
+            console.log("Cookie found. Attempting to load user");
+            $http({
+                url: '/getUser',
+                method: 'POST',
+                data: { user: userCookie }
+            }).then(function(httpResponse) {
+                console.log('Get user response:', httpResponse);
+                if (httpResponse.data.status == "success") {
+                    userService.set({
+                        "username": httpResponse.data.user,
+                        "id": httpResponse.data.id,
+                        "cash": httpResponse.data.cash,
+                        "bitcoin": httpResponse.data.bitcoin,
+                        "gains": httpResponse.data.gains
+                    });
+                    $scope.user = userService.get();
+                    initDashboard();
+                } else if (httpResponse.data == "fail") {
+                    console.log("failed to load user with cookie");
+                    $location.path('/login');
+                }
+            });
+        } else {
             $location.path('/login');
         }
 
+        function initDashboard() {
+            $scope.getTicker();
+            $scope.getChartData();
+            $scope.orders();
+            $scope.leaders();
+
+            setInterval(function() {
+                $scope.getTicker();
+                $scope.ticker = tickerService.get();
+            }, 10000);
+        }
 
         $scope.getTicker = function() {
             $http({
@@ -66,7 +101,7 @@ angular
                     method: 'POST',
                     data: { "quantity": $scope.quantity, "bid": $scope.ticker.bid, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin }
                 }).then(function(httpResponse) {
-                    console.log('response:', httpResponse);
+                    console.log('buy response:', httpResponse);
                     if (httpResponse.data.status == "success") {
                         userService.set({
                             "username": $scope.user.username,
@@ -95,7 +130,7 @@ angular
                     method: 'POST',
                     data: { "quantity": $scope.quantity, "ask": $scope.ticker.ask, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin }
                 }).then(function(httpResponse) {
-                    console.log('response:', httpResponse);
+                    console.log('sell response:', httpResponse);
                     if (httpResponse.data.status == "success") {
                         userService.set({
                             "username": $scope.user.username,
@@ -122,7 +157,7 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('orders response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     $scope.ordersArray = httpResponse.data.orders;
                 } else if (httpResponse.data == "nothing") {
@@ -136,7 +171,7 @@ angular
                 url: '/leaders',
                 method: 'POST'
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('leaders response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     $scope.leadersArray = httpResponse.data.leaders;
                     $scope.myData = httpResponse.data.leaders;
@@ -152,7 +187,7 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('user transactions response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("Your Transactions", httpResponse.data.orders);
@@ -168,7 +203,7 @@ angular
                 url: '/systemtransactionreport',
                 method: 'POST'
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('system transactions response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("System's Recent Transactions", httpResponse.data.orders);
@@ -184,7 +219,7 @@ angular
                 url: '/leadersreport',
                 method: 'POST',
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('leaderboardReport response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("Full Leaderboard", httpResponse.data.leaders);
@@ -198,16 +233,6 @@ angular
         $scope.logOut = function() {
             $location.path('/login');
         }
-
-        $scope.getTicker();
-        $scope.getChartData();
-        $scope.orders();
-        $scope.leaders();
-
-        setInterval(function() {
-            $scope.getTicker();
-            $scope.ticker = tickerService.get();
-        }, 10000);
 
         $scope.onClick = function(points, evt) {
             console.log(points, evt);

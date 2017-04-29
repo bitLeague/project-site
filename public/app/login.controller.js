@@ -1,6 +1,6 @@
 angular
 .module('myApp')
-.controller('myCtrl', function($scope, $http, $location, userService) {
+.controller('myCtrl', function($scope, $http, $location, userService, utilities) {
     $scope.submit = function() {
         console.log('clicked submit');
         $http({
@@ -40,6 +40,8 @@ angular
                     "bitcoin": httpResponse.data.bitcoin,
                     "gains": httpResponse.data.gains
                 });
+                utilities.createCookie('bitleague', httpResponse.data.user, 8000);
+                console.log("COOKIE Set!");
                 $location.path('/dashboard');
             } else if (httpResponse.data == "fail") {
                 $scope.errorMessage = 'Invalid username or password';

@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig(configs);
-
+    require('jit-grunt')(grunt);
 
     grunt.registerTask('dev', ['less', 'watch']);
 
