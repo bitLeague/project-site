@@ -18,7 +18,7 @@
          * Feature areas
          */
         'myApp.dashboard'
-    ])
+    ]) 
     .factory('userService', function() {
         var userData = {};
 
