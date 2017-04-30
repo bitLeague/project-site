@@ -6722,8 +6722,17 @@ button.close {
     display: none !important;
   }
 }
+a[ng-click] {
+  cursor: pointer;
+}
 body {
   padding-top: 50px;
+}
+.bl-brand {
+  padding: 5px 15px;
+}
+.bl-brand-logo {
+  max-height: 40px;
 }
 .navbar {
   margin-bottom: 0;
@@ -6742,10 +6751,12 @@ body {
   padding-top: 30px;
   color: #777777;
 }
-.myGrid {
-  width: 500px;
-  height: 250px;
+/** UI-GRID Styles - Should probably go in widgets module? At least own .less file **/
+.ui-grid-column-menu-button-last-col {
+  margin-right: 0;
 }
-.dash-header {
-  color: red !important;
+.myGrid {
+  width: 100%;
+  min-width: 300px;
+  height: 250px;
 }

@@ -4,6 +4,11 @@ angular
         $routeProvider
             .when('/dashboard', {
                 controller: 'dashboardController',
-                templateUrl: '/public/app/dashboard/dashboard.html'
+                templateUrl: '/public/app/dashboard/dashboard.html',
+                resolve: {
+                    userData: function(userService) {
+                        return userService.isAuthenticated();
+                    }
+                }
             })
     });

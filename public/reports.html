@@ -1,11 +1,6 @@
 <h3>Reports</h3>
 <a ng-click="loadDashboard()" href="">Return to Dashboard</a></br>
 <div>
-  <h4>{{ reportName }}</h4>
-   <div class="list-group">
-        <a ng-repeat="row in rowsArray" 
-            class="list-group-item">
-          {{ row }}</br></a>
-     </div></br>
+    <h4>{{ reportName }}</h4>
+    <div ui-grid="{ data: rowsArray }" class="myGrid"></div>
 </div>
-  

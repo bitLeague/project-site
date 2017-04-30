@@ -14,6 +14,6 @@ angular.module('myApp.core').config(function($routeProvider) {
             templateUrl: '/public/register.html'
         })
         .otherwise({
-            redirectTo: '/login'
+            redirectTo: '/'
         });
 });

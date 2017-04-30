@@ -1,36 +1,8 @@
 angular
     .module('myApp.dashboard')
-    .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService, utilities) {
-        var userCookie = utilities.getCookie('bitleague');
-        console.log("COOKIE", userCookie);
+    .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService, utilities, userData) {
+        $scope.user = userData;
 
-
-        if (userCookie) {
-            console.log("Cookie found. Attempting to load user");
-            $http({
-                url: '/getUser',
-                method: 'POST',
-                data: { user: userCookie }
-            }).then(function(httpResponse) {
-                console.log('Get user response:', httpResponse);
-                if (httpResponse.data.status == "success") {
-                    userService.set({
-                        "username": httpResponse.data.user,
-                        "id": httpResponse.data.id,
-                        "cash": httpResponse.data.cash,
-                        "bitcoin": httpResponse.data.bitcoin,
-                        "gains": httpResponse.data.gains
-                    });
-                    $scope.user = userService.get();
-                    initDashboard();
-                } else if (httpResponse.data == "fail") {
-                    console.log("failed to load user with cookie");
-                    $location.path('/login');
-                }
-            });
-        } else {
-            $location.path('/login');
-        }
 
         function initDashboard() {
             $scope.getTicker();
@@ -230,9 +202,7 @@ angular
             })
         }
 
-        $scope.logOut = function() {
-            $location.path('/login');
-        }
+        $scope.logOut = userService.logout;
 
         $scope.onClick = function(points, evt) {
             console.log(points, evt);
@@ -241,6 +211,7 @@ angular
             elements: { line: { tension: 0 } }
         };
         $scope.series = ["US$"];
+        initDashboard();
 
         // End chart test
     });

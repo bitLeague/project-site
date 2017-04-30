@@ -10,11 +10,12 @@
 </head>
 
 <body ng-app="myApp">
-    <h3>Bit League</h3>
+    <bl-menu></bl-menu>
     <div ng-view></div>
 
     <!-- dependencies -->
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
     <script src="/node_modules/angular-route/angular-route.min.js"></script>
     <script src="/node_modules/angular-strap/dist/angular-strap.min.js"></script>
@@ -30,10 +31,22 @@
     <script src="/public/app/core/core.module.js"></script>
     <script src="/public/app/core/core.config.js"></script>
     <script src="/public/app/core/utilities.service.js"></script>
+    <script src="/public/app/core/user.service.js"></script>
+
+    <!-- layout -->
+    <script src="/public/app/layout/layout.module.js"></script>
+    <script src="/public/app/layout/menu.directive.js"></script>
+
+    <!-- home -->
+    <script src="/public/app/home/home.module.js"></script>
+    <script src="/public/app/home/home.config.js"></script>
+    <script src="/public/app/home/home.controller.js"></script>
 
     <!-- dashboard -->
     <script src="/public/app/dashboard/dashboard.module.js"></script>
     <script src="/public/app/dashboard/dashboard.config.js"></script>
+    <script src="/public/app/dashboard/ticker.service.js"></script>
+    <script src="/public/app/dashboard/report.service.js"></script>
     <script src="/public/app/dashboard/dashboard.controller.js"></script>
 
     <!-- controllers -->
