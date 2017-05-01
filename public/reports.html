@@ -1,7 +1,13 @@
-<h3>Reports</h3>
-<a ng-click="loadDashboard()" href="">Return to Dashboard</a></br>
-<div>
-    <h4>{{ reportName }}</h4>
-    <div ui-grid="{ data: rowsArray }" class="myGrid"></div>
-    <a class="btn btn-lg btn-primary" ng-click="downloadCSV(rowsArray)" href="">Download CSV</a>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="form-signin-heading">Reports</h2>
+            <h4>{{ reportName }}</h4>
+            <div ui-grid="{ data: rowsArray }" class="myGrid"></div>
+            <div style="text-align: right; padding-top: 20px;">
+                <a class="btn btn-lg btn-primary" ng-click="downloadCSV(rowsArray)" href="">Download CSV</a>
+                <a ng-click="loadDashboard()" href="">Return to Dashboard</a>
+            </div>
+        </div>
+    </div>
 </div>

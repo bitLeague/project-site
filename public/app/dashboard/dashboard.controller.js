@@ -129,13 +129,46 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
+                action: "Sell"
+                price: 1350.53
+                quantity: 4
+                status: "Complete"
+                time: "2017-05-01T01:34:40.000Z"
+                type: "Market"
                 console.log('orders response:', httpResponse);
-                if (httpResponse.data.status == "success") {
-                    $scope.ordersArray = httpResponse.data.orders;
-                } else if (httpResponse.data == "nothing") {
-                    $scope.ordersArray = [];
-                }
-            })
+                $scope.orderGridOptions = {
+                    columnDefs: [{
+                        field: 'time',
+                        displayName: "Date",
+                        cellFilter: 'date',
+                        filterCellFiltered: true
+                    },
+                    {
+                        field: 'action',
+                        displayName: "Action"
+                    },
+                    {
+                        field: 'price',
+                        displayName: "Price",
+                        cellFilter: 'currency',
+                        filterCellFiltered: true
+                    },
+                    {
+                        field: 'quantity',
+                        displayName: "Qty"
+                    },
+                    {
+                        field: 'type',
+                        displayName: "Type"
+                    },
+                    {
+                        field: 'status',
+                        displayName: "Status"
+                    },]
+                };
+                $scope.orderGridOptions.data = httpResponse.data.orders;
+                console.log("HI", $scope.orderGridOptions.data);
+            });
         }
 
         $scope.leaders = function() {
