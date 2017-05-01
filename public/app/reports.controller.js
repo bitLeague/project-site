@@ -12,4 +12,6 @@ angular.module('myApp').controller('reportsController', function($scope, $http, 
     $scope.loadDashboard = function() {
         $location.path('/dashboard');
     }
+
+    $scope.downloadCSV = reportService.downloadCSV;
 });

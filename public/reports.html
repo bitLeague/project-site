@@ -3,4 +3,5 @@
 <div>
     <h4>{{ reportName }}</h4>
     <div ui-grid="{ data: rowsArray }" class="myGrid"></div>
+    <a ng-click="downloadCSV(rowsArray)" href="">Download CSV</a>
 </div>
