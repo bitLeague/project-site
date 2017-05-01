@@ -3,7 +3,7 @@ angular
         /*
          * Angular modules
          */
-        'ngRoute',
+        'ngRoute', 'ngAnimate',
         /*
          * Our reusable cross app code modules
          */
