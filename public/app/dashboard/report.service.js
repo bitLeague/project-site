@@ -26,6 +26,7 @@
                     method: 'POST',
                     data: data
                 }).then(function(httpResponse) {
+                    console.log("DATA", httpResponse.data);
                     doDownload(httpResponse.data);
                     var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: reportName + ' report has been downloaded.', placement: 'top', type: 'success', show: true});
                 }).catch(function(response) {

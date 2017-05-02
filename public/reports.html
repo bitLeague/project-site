@@ -3,10 +3,11 @@
         <div class="col-sm-12">
             <h2 class="form-signin-heading">Reports</h2>
             <h4>{{ reportName }}</h4>
-            <div ui-grid="{ data: rowsArray }" class="myGrid"></div>
+            <!-- <pre>{{ reportData | json}}</pre> -->
+            <div ui-grid="reportGridOptions" class="myGrid"></div>
             <div class="bl-btn-group">
                 <a class="bl-btn bl-btn--inverse" ng-click="loadDashboard()" href="">Return to Dashboard</a>
-                <a class="bl-btn" ng-click="downloadCSV(rowsArray)" href="">Download CSV</a>
+                <a class="bl-btn" ng-click="downloadCSV(reportGridOptions.data)" href="">Download CSV</a>
             </div>
         </div>
     </div>
