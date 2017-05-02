@@ -6763,7 +6763,7 @@ body {
 .bl-form--floating {
   margin-top: 10em;
   margin-top: 20vh;
-  border: 0.3em solid #9DA7AE;
+  border: 2px solid #9DA7AE;
   padding: 2em;
   background: #fafafa;
   -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
@@ -6771,7 +6771,7 @@ body {
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
 }
 .bl-form__header {
-  color: #94bf6e;
+  color: #37bb83;
   font-weight: bold;
 }
 .bl-input-container {
@@ -6784,12 +6784,12 @@ body {
   padding: 1em 1em 0;
   height: 60px;
   color: #333332;
-  border: 0.15em solid #9DA7AE;
+  border: 1px solid #9DA7AE;
   background-color: rgba(255, 255, 255, 0.9);
   transition: background-color 0.3s, border-color 0.3s;
 }
 .bl-text-input:focus {
-  border: 0.15em solid white;
+  border: 1px solid white;
   outline: none;
   background-color: white;
 }
@@ -6797,7 +6797,7 @@ body {
   position: absolute;
   margin-bottom: 0;
   top: -2px;
-  left: 1.15em;
+  left: 2em;
   padding: 1.4em 0;
   font-weight: 600;
   text-transform: uppercase;
@@ -6856,8 +6856,8 @@ input.bl-btn {
   display: inline-block;
   width: 100%;
   text-align: center;
-  background: #94bf6e;
-  border: 1px solid #94bf6e;
+  background: #37bb83;
+  border: 1px solid #37bb83;
   color: #FFFFFF;
   line-height: 1.4;
   padding: 1.25em 2em;
@@ -6868,19 +6868,19 @@ input.bl-btn {
 }
 a.bl-btn:hover,
 input.bl-btn:hover {
-  background: #557835;
-  border-color: #557835;
+  background: #206c4c;
+  border-color: #206c4c;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--inverse {
   background: white;
-  color: #557835;
-  border: 1px solid #557835;
+  color: #37bb83;
+  border: 1px solid #37bb83;
   transition: color 0.3s, border-color 0.3s;
 }
 a.bl-btn.bl-btn--inverse:hover {
-  border: 1px solid #94bf6e;
-  color: #94bf6e;
+  border: 1px solid #206c4c;
+  color: #206c4c;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--secondary {
@@ -6916,6 +6916,10 @@ a.bl-btn.bl-btn--secondary:hover {
 }
 .bl-bg-login {
   background-image: url(/public/images/abstract-1.jpg);
+}
+.ui-grid-viewport {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 @media screen and (min-width: 768px) {
   .bl-btn-group {

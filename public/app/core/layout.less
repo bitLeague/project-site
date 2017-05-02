@@ -55,7 +55,7 @@ body {
 // Form padding
 @bl-input-v-pad: 1em;
 @bl-input-h-pad: 1em;
-@bl-input-border-width: .15em;
+@bl-input-border-width: 1px;
 // Content Section
 @bl-content-icon-size: 2em;
 // Buttons
@@ -202,14 +202,14 @@ input.bl-btn:hover {
 
 a.bl-btn.bl-btn--inverse {
     background: white;
-    color: @bl-dark-green;
-    border: 1px solid @bl-dark-green;
+    color: @bl-green;
+    border: 1px solid @bl-green;
     transition: color .3s, border-color .3s;
 }
 
 a.bl-btn.bl-btn--inverse:hover {
-    border: 1px solid @bl-green;
-    color: @bl-green;
+    border: 1px solid @bl-dark-green;
+    color: @bl-dark-green;
     text-decoration: none;
 }
 
@@ -234,12 +234,15 @@ a.bl-btn.bl-btn--secondary:hover {
 .bl-dashboard-box > * {
     margin: 0;
 }
+
 .bl-dashboard-box > * + * {
     margin-top: @bl-vertical-spacing-third
 }
+
 .bl-dashboard-header {
     text-align: center;
 }
+
 // Backgrounds
 .bl-full-page-bg {
     // position: absolute;
@@ -258,6 +261,11 @@ a.bl-btn.bl-btn--secondary:hover {
 
 .bl-bg-login {
     background-image: url(/public/images/abstract-1.jpg);
+}
+
+.ui-grid-viewport {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 
 /// MEDIA QUERIES
