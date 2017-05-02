@@ -6771,7 +6771,7 @@ body {
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
 }
 .bl-form__header {
-  color: #7aad4d;
+  color: #94bf6e;
   font-weight: bold;
 }
 .bl-input-container {
@@ -6856,8 +6856,8 @@ input.bl-btn {
   display: inline-block;
   width: 100%;
   text-align: center;
-  background: #7aad4d;
-  border: 1px solid #7aad4d;
+  background: #94bf6e;
+  border: 1px solid #94bf6e;
   color: #FFFFFF;
   line-height: 1.4;
   padding: 1.25em 2em;
@@ -6879,8 +6879,8 @@ a.bl-btn.bl-btn--inverse {
   transition: color 0.3s, border-color 0.3s;
 }
 a.bl-btn.bl-btn--inverse:hover {
-  border: 1px solid #7aad4d;
-  color: #7aad4d;
+  border: 1px solid #94bf6e;
+  color: #94bf6e;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--secondary {
