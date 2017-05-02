@@ -6927,6 +6927,12 @@ a.bl-btn.bl-btn--secondary:hover {
 .mobile-top-margin {
   margin-top: 2rem;
 }
+#alert-box {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  z-index: 1;
+}
 @media screen and (min-width: 768px) {
   .mobile-top-margin {
     margin-top: 0;
