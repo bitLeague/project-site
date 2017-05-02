@@ -1574,6 +1574,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  padding-bottom: 30px;
 }
 @media (min-width: 768px) {
   .container {
@@ -6770,7 +6771,7 @@ body {
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
 }
 .bl-form__header {
-  color: #7aad4d;
+  color: #37bb83;
   font-weight: bold;
 }
 .bl-input-container {
@@ -6783,9 +6784,9 @@ body {
   padding: 1em 1em 0;
   height: 60px;
   color: #333332;
-  border: 0.15em solid #9DA7AE;
+  border: 1px solid #9DA7AE;
   background-color: rgba(255, 255, 255, 0.9);
-  transition: background-color 0.3s, border-color 0.3s;
+  /*transition: background-color 0.3s, border-color 0.3s;*/
 }
 .bl-text-input:focus {
   border: 0.15em solid white;
@@ -6855,7 +6856,7 @@ input.bl-btn {
   display: inline-block;
   width: 100%;
   text-align: center;
-  background: #7aad4d;
+  background: #3dbd87;
   border: 1px solid #7aad4d;
   color: #FFFFFF;
   line-height: 1.4;
@@ -6867,19 +6868,19 @@ input.bl-btn {
 }
 a.bl-btn:hover,
 input.bl-btn:hover {
-  background: #557835;
+  background: #338261;
   border-color: #557835;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--inverse {
   background: white;
-  color: #557835;
+  color: #3dbd87;
   border: 1px solid #557835;
   transition: color 0.3s, border-color 0.3s;
 }
 a.bl-btn.bl-btn--inverse:hover {
   border: 1px solid #7aad4d;
-  color: #7aad4d;
+  color: #338261;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--secondary {
@@ -6950,4 +6951,9 @@ a.bl-btn.bl-btn--secondary:hover {
   width: 100%;
   min-width: 300px;
   height: 250px;
+}
+
+.ui-grid-viewport {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }

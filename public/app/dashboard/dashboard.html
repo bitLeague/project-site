@@ -20,15 +20,15 @@
             <div class="bl-dashboard-box">
                 <h3 class="bl-dashboard-header">Account Details</h3>
                 <span class="bl-input-container">
-                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="bitcoin" name="bitcoin" value="{{user.bitcoin}}">
+                        <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: x-large;" type="text" id="bitcoin" name="bitcoin" value="{{user.bitcoin}}">
                         <label class="bl-form-label" for="bitcoin">Bitcoin Balance</label>
                 </span>
                 <span class="bl-input-container">
-                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="usercash" name="usercash" value="{{user.cash | currency:'US $'}}">
+                        <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: x-large;" type="text" id="usercash" name="usercash" value="{{user.cash | currency:'US $'}}">
                         <label class="bl-form-label" for="usercash">Cash Balance</label>
                 </span>
                 <span class="bl-input-container">
-                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="gains" name="gains" value="{{user.gains | currency:'US $'}}">
+                        <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: x-large;" type="text" id="gains" name="gains" value="{{user.gains | currency:'US $'}}">
                         <label class="bl-form-label" for="gains">Total Gains (Losses)</label>
                 </span>
             </div>
@@ -47,23 +47,23 @@
             <h3>Market Snapshot</h3>
             <div class="bl-dashboard-box">
                 <span class="bl-input-container">
-                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="bid" name="bid" value="{{ticker.bid | currency}}" />
+                    <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: 20px;" type="text" id="bid" name="bid" value="{{ticker.bid | currency}}" />
                     <label class="bl-form-label" for="bid">Bid</label>
                 </span>
                 <span class="bl-input-container">
-                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="ask" name="ask" value="{{ticker.ask | currency}}" />
+                    <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: 20px;" type="text" id="ask" name="ask" value="{{ticker.ask | currency}}" />
                     <label class="bl-form-label" for="ask">Ask</label>
                 </span>
                 <span class="bl-input-container">
-                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="last" name="last" value="{{ticker.last | currency}}" />
+                    <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: 20px;" type="text" id="last" name="last" value="{{ticker.last | currency}}" />
                     <label class="bl-form-label" for="last">Last Price</label>
                 </span>
                 <span class="bl-input-container">
-                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="volume" name="volume" value="{{ticker.volume}}"/>
+                    <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: 20px;" type="text" id="volume" name="volume" value="{{ticker.volume}}"/>
                     <label class="bl-form-label" for="volume">24 Hour Volume (BTC)</label>
                 </span>
                 <span class="bl-input-container">
-                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="high" name="high" value="{{ticker.high | currency}} / {{ticker.low | currency}}" />
+                    <input disabled class="bl-text-input not-empty ng-dirty" style="border:none; font-size: 20px;" type="text" id="high" name="high" value="{{ticker.high | currency}} / {{ticker.low | currency}}" />
                     <label class="bl-form-label" for="high">24 Hour High/Low</label>
                 </span>
             </div>
