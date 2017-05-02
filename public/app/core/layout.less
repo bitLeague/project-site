@@ -272,10 +272,17 @@ a.bl-btn.bl-btn--secondary:hover {
     overflow-x: hidden !important;
 }
 
+.mobile-top-margin {
+    margin-top: @bl-vertical-spacing-third;
+}
+
 /// MEDIA QUERIES
 @media screen and (min-width: 500px) {}
 
 @media screen and (min-width: 768px) {
+    .mobile-top-margin {
+        margin-top: 0;
+    }
     .bl-btn-group {
         text-align: right;
     }

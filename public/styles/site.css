@@ -6924,7 +6924,13 @@ a.bl-btn.bl-btn--secondary:hover {
   overflow-y: scroll !important;
   overflow-x: hidden !important;
 }
+.mobile-top-margin {
+  margin-top: 2rem;
+}
 @media screen and (min-width: 768px) {
+  .mobile-top-margin {
+    margin-top: 0;
+  }
   .bl-btn-group {
     text-align: right;
   }
