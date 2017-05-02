@@ -197,6 +197,7 @@ a.bl-btn:hover,
 input.bl-btn:hover {
     background: @bl-dark-green;
     border-color: @bl-dark-green;
+    text-decoration: none;
 }
 
 a.bl-btn.bl-btn--inverse {
@@ -230,6 +231,15 @@ a.bl-btn.bl-btn--secondary:hover {
     margin-top: @bl-vertical-spacing-third;
 }
 
+.bl-dashboard-box > * {
+    margin: 0;
+}
+.bl-dashboard-box > * + * {
+    margin-top: @bl-vertical-spacing-third
+}
+.bl-dashboard-header {
+    text-align: center;
+}
 // Backgrounds
 .bl-full-page-bg {
     position: absolute;
@@ -262,6 +272,16 @@ a.bl-btn.bl-btn--secondary:hover {
     .bl-btn-group .bl-btn {
         width: unset;
         display: inline-block;
+    }
+    .bl-btn-group.bl-btn-group--dashboard {
+        text-align: left;
+    }
+    .bl-btn-group.bl-btn-group--dashboard .bl-btn {
+        float: left;
+        width: 49%;
+    }
+    .bl-btn-group.bl-btn-group--dashboard > * + * {
+        margin-left: 2%;
     }
 }
 

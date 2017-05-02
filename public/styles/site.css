@@ -6869,6 +6869,7 @@ a.bl-btn:hover,
 input.bl-btn:hover {
   background: #557835;
   border-color: #557835;
+  text-decoration: none;
 }
 a.bl-btn.bl-btn--inverse {
   background: white;
@@ -6895,6 +6896,15 @@ a.bl-btn.bl-btn--secondary:hover {
 .bl-btn-group > * + * {
   margin-top: 2rem;
 }
+.bl-dashboard-box > * {
+  margin: 0;
+}
+.bl-dashboard-box > * + * {
+  margin-top: 2rem;
+}
+.bl-dashboard-header {
+  text-align: center;
+}
 .bl-full-page-bg {
   position: absolute;
   top: 0;
@@ -6920,6 +6930,16 @@ a.bl-btn.bl-btn--secondary:hover {
   .bl-btn-group .bl-btn {
     width: unset;
     display: inline-block;
+  }
+  .bl-btn-group.bl-btn-group--dashboard {
+    text-align: left;
+  }
+  .bl-btn-group.bl-btn-group--dashboard .bl-btn {
+    float: left;
+    width: 49%;
+  }
+  .bl-btn-group.bl-btn-group--dashboard > * + * {
+    margin-left: 2%;
   }
 }
 /** UI-GRID Styles - Should probably go in widgets module? At least own .less file **/

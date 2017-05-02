@@ -1,47 +1,88 @@
 <div class="container" style="padding-top: 20px;">
     <div class="row">
-        <div class="col-sm-5">
-            <div>
-                <h4>Market Snapshot</h4> Bid: {{ticker.bid}} </br>
-                Ask: {{ticker.ask | currency}} </br>
-                Last Price: {{ticker.last | currency}} </br>
-                24 Hour Volume: {{ticker.volume}} </br>
-                24 Hour High/Low: {{ticker.high | currency}}/{{ticker.low | currency}} </br>
-            </div>
-            <div>
-                <h4>Order History (Last 10)</h4>
-                <div ui-grid="orderGridOptions" class="myGrid" ng-if="orderGridOptions"></div>
-            </div>
-            <div>
-                <h4>Account Details</h4> Cash Balance: {{user.cash | currency:"US $"}} </br>
-                Bitcoin Balance: {{user.bitcoin}} </br>
-                Total Gains (Losses): {{user.gains | currency:"US $"}} </br>
-            </div>
-            <div>
-                <h4>Reports</h4>
-                <a ng-click="userTransactionReport()" href="">Your Transactions</a></br>
-                <a ng-click="systemTransactionReport()" href="">System's Recent Transactions</a></br>
-                <a ng-click="leaderboardReport()" href="">Full Leaderboard</a></br>
+        <div class="col-sm-4">
+            <div class="bl-dashboard-box">
+                <h3 class="bl-dashboard-header">Trade Center</h3>
+                <select style="display: block; width: 100%;">
+                    <option>Market Order</option>
+                </select>
+                <span class="bl-input-container">
+                        <input class="bl-text-input" type="text" id="quantity" name="quantity" ng-model="quantity" ng-class="{'not-empty': quantity.length > 0}">
+                        <label class="bl-form-label" for="quantity">Quantity</label>
+                </span>
+                <div class="bl-btn-group bl-btn-group--dashboard clearfix">
+                    <a class="bl-btn" ng-click="buy()">Buy <br> {{ticker.bid | currency:"US $"}}</a>
+                    <a class="bl-btn bl-btn--inverse" ng-click="sell()"> Sell <br> {{ticker.ask | currency:"US $"}}</a>
+                </div>
             </div>
         </div>
-        <div class="col-sm-7">
-            <div class="col-sm-12">
-                <h4>Market Historical 30 Day Chart</h4>
-                </br>
-                <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
-                </canvas>
+        <div class="col-sm-4">
+            <div class="bl-dashboard-box">
+                <h3 class="bl-dashboard-header">Account Details</h3>
+                <span class="bl-input-container">
+                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="bitcoin" name="bitcoin" value="{{user.bitcoin}}">
+                        <label class="bl-form-label" for="bitcoin">Bitcoin Balance</label>
+                </span>
+                <span class="bl-input-container">
+                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="usercash" name="usercash" value="{{user.cash | currency:'US $'}}">
+                        <label class="bl-form-label" for="usercash">Cash Balance</label>
+                </span>
+                <span class="bl-input-container">
+                        <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="gains" name="gains" value="{{user.gains | currency:'US $'}}">
+                        <label class="bl-form-label" for="gains">Total Gains (Losses)</label>
+                </span>
             </div>
-            <div class="col-sm-6">
-                <h4>Trade Center</h4> Order Type: Market Order <br><br>
-                Quantity
-                <input type="text" ng-model="quantity"> <br><br>
-                <button class="btn btn-primary" ng-click="buy()"> Buy <br> {{ticker.bid | currency:"US $"}}</button> &nbsp;
-                <button class="btn btn-danger" ng-click="sell()"> Sell <br> {{ticker.ask | currency:"US $"}}</button>
+        </div>
+        <div class="col-sm-4">
+            <div class="bl-dashboard-box">
+                <h3 class="bl-dashboard-header">Reports</h3>
+                <a class="bl-btn" ng-click="userTransactionReport()" href="">Your Transactions</a>
+                <a class="bl-btn" ng-click="systemTransactionReport()" href="">System's Recent Transactions</a>
+                <a class="bl-btn" ng-click="leaderboardReport()" href="">Full Leaderboard</a>
             </div>
-            <div class="col-sm-6">
-                <h4>Leaders</h4>
-                <div ui-grid="{ data: leadersArray }" class="myGrid"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Market Snapshot</h3>
+            <div class="bl-dashboard-box">
+                <span class="bl-input-container">
+                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="bid" name="bid" value="{{ticker.bid | currency}}" />
+                    <label class="bl-form-label" for="bid">Bid</label>
+                </span>
+                <span class="bl-input-container">
+                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="ask" name="ask" value="{{ticker.ask | currency}}" />
+                    <label class="bl-form-label" for="ask">Ask</label>
+                </span>
+                <span class="bl-input-container">
+                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="last" name="last" value="{{ticker.last | currency}}" />
+                    <label class="bl-form-label" for="last">Last Price</label>
+                </span>
+                <span class="bl-input-container">
+                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="volume" name="volume" value="{{ticker.volume}}"/>
+                    <label class="bl-form-label" for="volume">24 Hour Volume (BTC)</label>
+                </span>
+                <span class="bl-input-container">
+                    <input disabled class="bl-text-input not-empty ng-dirty" type="text" id="high" name="high" value="{{ticker.high | currency}} / {{ticker.low | currency}}" />
+                    <label class="bl-form-label" for="high">24 Hour High/Low</label>
+                </span>
             </div>
+        </div>
+        <div class="col-sm-8">
+            <h3>Market Historical 30 Day Chart</h3>
+            </br>
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>Order History (Last 10)</h3>
+            <div ui-grid="orderGridOptions" class="myGrid" ng-if="orderGridOptions"></div>
+        </div>
+        <div class="col-sm-4">
+            <h3>Leaders</h3>
+            <div ui-grid="{ data: leadersArray }" class="myGrid"></div>
         </div>
     </div>
 </div>

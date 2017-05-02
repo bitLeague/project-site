@@ -1,6 +1,6 @@
 angular
     .module('myApp.dashboard')
-    .controller('dashboardController', function($scope, $http, $location, userService, tickerService, reportService, utilities, userData) {
+    .controller('dashboardController', function($scope, $http, $location, $alert, userService, tickerService, reportService, utilities, userData) {
         $scope.user = userData;
 
 
@@ -85,12 +85,14 @@ angular
                         $scope.user = userService.get();
                         $scope.orders();
                         $scope.leaders();
+                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You bought bitcoins.', placement: 'top', type: 'success', show: true});
+                        $scope.quantity = '';
                     } else if (httpResponse.data == "fail") {
-                        alert("Error: We could not process that order.");
+                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'We could not process that order.', placement: 'top', type: 'danger', show: true});
                     }
                 })
             } else {
-                alert("You don't have enough cash to complete this order. Please adjust the quantity.");
+                var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true});
             }
         }
 
@@ -114,12 +116,14 @@ angular
                         $scope.user = userService.get();
                         $scope.orders();
                         $scope.leaders();
+                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You sold bitcoins.', placement: 'top', type: 'success', show: true});
+                        $scope.quantity = '';
                     } else if (httpResponse.data == "fail") {
-                        alert("Error: We could not process that order.");
+                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'Your order couldn\'t be processed', placement: 'top', type: 'danger', show: true});
                     }
                 })
             } else {
-                alert("You cannot sell more Bitcoins than you currently have.");
+                var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true});
             }
         }
 
@@ -129,12 +133,6 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
-                action: "Sell"
-                price: 1350.53
-                quantity: 4
-                status: "Complete"
-                time: "2017-05-01T01:34:40.000Z"
-                type: "Market"
                 console.log('orders response:', httpResponse);
                 $scope.orderGridOptions = {
                     columnDefs: [{
