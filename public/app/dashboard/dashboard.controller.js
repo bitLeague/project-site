@@ -85,14 +85,14 @@ angular
                         $scope.user = userService.get();
                         $scope.orders();
                         $scope.leaders();
-                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You bought bitcoins.', placement: 'top', type: 'success', show: true});
+                        var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You bought bitcoins.', placement: 'top', type: 'success', show: true });
                         $scope.quantity = '';
                     } else if (httpResponse.data == "fail") {
-                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'We could not process that order.', placement: 'top', type: 'danger', show: true});
+                        var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'We could not process that order.', placement: 'top', type: 'danger', show: true });
                     }
                 })
             } else {
-                var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true});
+                var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true });
             }
         }
 
@@ -116,14 +116,14 @@ angular
                         $scope.user = userService.get();
                         $scope.orders();
                         $scope.leaders();
-                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You sold bitcoins.', placement: 'top', type: 'success', show: true});
+                        var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You sold bitcoins.', placement: 'top', type: 'success', show: true });
                         $scope.quantity = '';
                     } else if (httpResponse.data == "fail") {
-                        var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'Your order couldn\'t be processed', placement: 'top', type: 'danger', show: true});
+                        var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'Your order couldn\'t be processed', placement: 'top', type: 'danger', show: true });
                     }
                 })
             } else {
-                var myAlert = $alert({animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true});
+                var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Oops!', content: 'You don\'t have enough cash to complete this order. Please adjust the quantity.', placement: 'top', type: 'danger', show: true });
             }
         }
 
@@ -140,29 +140,24 @@ angular
                         displayName: "Date",
                         cellFilter: 'date',
                         filterCellFiltered: true
-                    },
-                    {
+                    }, {
                         field: 'action',
                         displayName: "Action"
-                    },
-                    {
+                    }, {
                         field: 'price',
                         displayName: "Price",
                         cellFilter: 'currency',
                         filterCellFiltered: true
-                    },
-                    {
+                    }, {
                         field: 'quantity',
                         displayName: "Qty"
-                    },
-                    {
+                    }, {
                         field: 'type',
                         displayName: "Type"
-                    },
-                    {
+                    }, {
                         field: 'status',
                         displayName: "Status"
-                    },]
+                    }, ]
                 };
                 $scope.orderGridOptions.data = httpResponse.data.orders;
                 console.log("HI", $scope.orderGridOptions.data);
@@ -176,8 +171,18 @@ angular
             }).then(function(httpResponse) {
                 console.log('leaders response:', httpResponse);
                 if (httpResponse.data.status == "success") {
-                    $scope.leadersArray = httpResponse.data.leaders;
-                    $scope.myData = httpResponse.data.leaders;
+                    $scope.leaderGridOptions = {
+                        columnDefs: [{
+                            field: 'username',
+                            displayName: "User"
+                        }, {
+                            field: 'gains',
+                            displayName: "Gains",
+                            cellFilter: 'currency',
+                            filterCellFiltered: true
+                        }]
+                    };
+                    $scope.leaderGridOptions.data = httpResponse.data.leaders;
                 } else if (httpResponse.data == "nothing") {
                     $scope.leadersArray = [];
                 }
