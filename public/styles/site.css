@@ -6930,6 +6930,8 @@ a.bl-btn.bl-btn--secondary:hover {
 #alert-box {
   position: absolute;
   top: 50px;
+  height: 50px;
+  overflow: hidden;
   width: 100%;
   z-index: 1;
 }
