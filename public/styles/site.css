@@ -6754,6 +6754,9 @@ body {
 .btn {
   transition: background-color 0.3s;
 }
+.container {
+  padding-bottom: 30px;
+}
 .bl-form > * {
   margin: 0;
 }
@@ -6797,7 +6800,7 @@ body {
   position: absolute;
   margin-bottom: 0;
   top: -2px;
-  left: 2em;
+  left: 1em;
   padding: 1.4em 0;
   font-weight: 600;
   text-transform: uppercase;
