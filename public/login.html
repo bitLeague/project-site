@@ -1,0 +1,22 @@
+<div class="bl-full-page-bg bl-bg-login">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="margin: 0 auto; float: none; text-align: center;">
+                <form class="bl-form bl-form--floating">
+                    <h2 class="bl-form__header">Please sign in</h2>
+                    <div ng-if="errorMessage">{{ errorMessage }}</div>
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="text" id="username" name="username" ng-model="data.user" ng-class="{'not-empty': data.user.length > 0}">
+                        <label class="bl-form-label" for="username">Username</label>
+                    </span>
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="password" id="password" name="password" ng-model="data.password" ng-class="{'not-empty': data.password.length > 0}">
+                        <label class="bl-form-label" for="password">Password</label>
+                    </span>
+                    <input type="submit" name="" value="Log in" class="bl-btn" ng-click="login()">
+                    <a href="#!/register" class="bl-btn bl-btn--inverse">Register</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

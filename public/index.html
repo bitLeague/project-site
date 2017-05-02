@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BitLeague</title>
+    <!-- ui grid... could possibly go in site.less -->
+    <link rel="styleSheet" href="/node_modules/angular-ui-grid/ui-grid.min.css"/>
+
+    <!-- bootstrap and main styles -->
+    <link rel="stylesheet" type="text/css" href="/node_modules/angular-motion/dist/angular-motion.css">
+    <link rel="stylesheet" type="text/css" href="/public/styles/site.css">
+</head>
+
+<body ng-app="myApp">
+    <bl-menu></bl-menu>
+    <div id="alert-box"></div>
+    <div ng-view></div>
+
+    <!-- dependencies -->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/angular-animate/angular-animate.js"></script>
+    <script src="/node_modules/angular-route/angular-route.min.js"></script>
+    <script src="/node_modules/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="/node_modules/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="/node_modules/chart.js/dist/Chart.bundle.min.js"></script>
+    <script src="/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="/node_modules/angular-ui-grid/ui-grid.min.js"></script>
+
+    <!-- app -->
+    <script src="/public/app/index.js"></script>
+
+    <!-- core module -->
+    <script src="/public/app/core/core.module.js"></script>
+    <script src="/public/app/core/core.config.js"></script>
+    <script src="/public/app/core/utilities.service.js"></script>
+    <script src="/public/app/core/user.service.js"></script>
+
+    <!-- layout -->
+    <script src="/public/app/layout/layout.module.js"></script>
+    <script src="/public/app/layout/menu.directive.js"></script>
+
+    <!-- home -->
+    <script src="/public/app/home/home.module.js"></script>
+    <script src="/public/app/home/home.config.js"></script>
+    <script src="/public/app/home/home.controller.js"></script>
+
+    <!-- dashboard -->
+    <script src="/public/app/dashboard/dashboard.module.js"></script>
+    <script src="/public/app/dashboard/dashboard.config.js"></script>
+    <script src="/public/app/dashboard/ticker.service.js"></script>
+    <script src="/public/app/dashboard/report.service.js"></script>
+    <script src="/public/app/dashboard/dashboard.controller.js"></script>
+
+    <!-- controllers -->
+    <script src="/public/app/login.controller.js"></script>
+    <script src="/public/app/reports.controller.js"></script>
+</body>
