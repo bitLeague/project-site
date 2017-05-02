@@ -10,19 +10,14 @@ function blMenu($q, userService) {
 
         },
         link: function(scope, element, attrs) {
-            scope.user = userService.get();
             $q.when(userService.isAuthenticated()).then(function(data) {
                 scope.user = data;
             });
             scope.logout = userService.logout;
 
-            scope.$watch('user', function() {
-                scope.user = userService.get();
-            });
             scope.$on('bl.login', function() {
-                $q.when(userService.get()).then(function(data) {
-                    scope.user = data;
-                });
+                console.log("HI", userService.get());
+                scope.user = userService.get();
             });
 
             scope.$on('bl.logout', function() {

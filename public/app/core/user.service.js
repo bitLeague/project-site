@@ -25,13 +25,11 @@ function userService($rootScope, $q, $http, $location, utilities) {
         var userCookie = utilities.getCookie('bitleague');
 
         if (userCookie) {
-            console.log("Cookie found. Attempting to load user");
             return $http({
                 url: '/getUser',
                 method: 'POST',
                 data: { user: userCookie }
             }).then(function(httpResponse) {
-                console.log('Get user response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     userData = {
                         "username": httpResponse.data.user,
@@ -40,7 +38,6 @@ function userService($rootScope, $q, $http, $location, utilities) {
                         "bitcoin": httpResponse.data.bitcoin,
                         "gains": httpResponse.data.gains
                     };
-                    console.log("Userdata in isAuthenticated", userData);
                     $rootScope.$broadcast('bl.login');
                     return userData;
                 } else if (httpResponse.data == "fail") {
@@ -52,7 +49,6 @@ function userService($rootScope, $q, $http, $location, utilities) {
     }
 
     function logout() {
-        console.log("delete cookie and user data");
         userData = {};
         utilities.deleteCookie('bitleague');
         $rootScope.$broadcast('bl.logout');
@@ -60,7 +56,7 @@ function userService($rootScope, $q, $http, $location, utilities) {
     }
 
     function set(data) {
-        $rootScope.$broadcast('bl.login');
         userData = data;
+        $rootScope.$broadcast('bl.login');
     }
 }
