@@ -1574,7 +1574,6 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-  padding-bottom: 30px;
 }
 @media (min-width: 768px) {
   .container {
@@ -6762,7 +6761,8 @@ body {
   margin-top: 2rem;
 }
 .bl-form--floating {
-  margin-top: 15em;
+  margin-top: 10em;
+  margin-top: 20vh;
   border: 0.3em solid #9DA7AE;
   padding: 2em;
   background: #fafafa;
@@ -6771,7 +6771,7 @@ body {
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
 }
 .bl-form__header {
-  color: #37bb83;
+  color: #7aad4d;
   font-weight: bold;
 }
 .bl-input-container {
@@ -6784,9 +6784,9 @@ body {
   padding: 1em 1em 0;
   height: 60px;
   color: #333332;
-  border: 1px solid #9DA7AE;
+  border: 0.15em solid #9DA7AE;
   background-color: rgba(255, 255, 255, 0.9);
-  /*transition: background-color 0.3s, border-color 0.3s;*/
+  transition: background-color 0.3s, border-color 0.3s;
 }
 .bl-text-input:focus {
   border: 0.15em solid white;
@@ -6856,7 +6856,7 @@ input.bl-btn {
   display: inline-block;
   width: 100%;
   text-align: center;
-  background: #3dbd87;
+  background: #7aad4d;
   border: 1px solid #7aad4d;
   color: #FFFFFF;
   line-height: 1.4;
@@ -6868,19 +6868,19 @@ input.bl-btn {
 }
 a.bl-btn:hover,
 input.bl-btn:hover {
-  background: #338261;
+  background: #557835;
   border-color: #557835;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--inverse {
   background: white;
-  color: #3dbd87;
+  color: #557835;
   border: 1px solid #557835;
   transition: color 0.3s, border-color 0.3s;
 }
 a.bl-btn.bl-btn--inverse:hover {
   border: 1px solid #7aad4d;
-  color: #338261;
+  color: #7aad4d;
   text-decoration: none;
 }
 a.bl-btn.bl-btn--secondary {
@@ -6907,15 +6907,12 @@ a.bl-btn.bl-btn--secondary:hover {
   text-align: center;
 }
 .bl-full-page-bg {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  padding-bottom: 100px;
+  min-height: 110vh;
   background-size: cover;
 }
 .bl-bg-registration {
-  background-image: url(/public/images/business-people-1.jpg);
+  background-image: url(/public/images/abstract-1.jpg);
 }
 .bl-bg-login {
   background-image: url(/public/images/abstract-1.jpg);
@@ -6951,9 +6948,4 @@ a.bl-btn.bl-btn--secondary:hover {
   width: 100%;
   min-width: 300px;
   height: 250px;
-}
-
-.ui-grid-viewport {
-  overflow-y: scroll !important;
-  overflow-x: hidden !important;
 }
