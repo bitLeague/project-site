@@ -6751,6 +6751,177 @@ body {
   padding-top: 30px;
   color: #777777;
 }
+.btn {
+  transition: background-color 0.3s;
+}
+.bl-form > * {
+  margin: 0;
+}
+.bl-form > * + * {
+  margin-top: 2rem;
+}
+.bl-form--floating {
+  margin-top: 15em;
+  border: 0.3em solid #9DA7AE;
+  padding: 2em;
+  background: #fafafa;
+  -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.4);
+}
+.bl-form__header {
+  color: #7aad4d;
+  font-weight: bold;
+}
+.bl-input-container {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.bl-text-input {
+  width: 100%;
+  padding: 1em 1em 0;
+  height: 60px;
+  color: #333332;
+  border: 0.15em solid #9DA7AE;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.bl-text-input:focus {
+  border: 0.15em solid white;
+  outline: none;
+  background-color: white;
+}
+.bl-form-label {
+  position: absolute;
+  margin-bottom: 0;
+  top: -2px;
+  left: 1.15em;
+  padding: 1.4em 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  -o-transition: transform 0.3s, opacity 0.3s;
+  -ms-transition: transform 0.3s, opacity 0.3s;
+  -moz-transition: transform 0.3s, opacity 0.3s;
+  -webkit-transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  -o-transform-origin: left;
+  -ms-transform-origin: left;
+  -moz-transform-origin: left;
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  -o-transform: scale(0.8) translateY(0);
+  -ms-transform: scale(0.8) translateY(0);
+  -moz-transform: scale(0.8) translateY(0);
+  -webkit-transform: scale(0.8) translateY(0);
+  transform: scale(0.8) translateY(0);
+  color: #9DA7AE;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.bl-text-input.ng-dirty.not-empty ~ .bl-form-label,
+.bl-text-input:focus ~ .bl-form-label {
+  -o-transform: scale(0.75) translateY(-1.25em);
+  -ms-transform: scale(0.75) translateY(-1.25em);
+  -moz-transform: scale(0.75) translateY(-1.25em);
+  -webkit-transform: scale(0.75) translateY(-1.25em);
+  transform: scale(0.75) translateY(-1.25em);
+  opacity: .75;
+}
+.bl-input-container .dropdown-menu {
+  width: 100%;
+  border-radius: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.bl-input-container li {
+  padding: .25em 0;
+}
+.bl-input-container li.active {
+  background: #00A2DD;
+}
+.bl-input-container li.active > a {
+  background: none;
+}
+a.bl-btn,
+input.bl-btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background: #7aad4d;
+  border: 1px solid #7aad4d;
+  color: #FFFFFF;
+  line-height: 1.4;
+  padding: 1.25em 2em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+a.bl-btn:hover,
+input.bl-btn:hover {
+  background: #557835;
+  border-color: #557835;
+}
+a.bl-btn.bl-btn--inverse {
+  background: white;
+  color: #557835;
+  border: 1px solid #557835;
+  transition: color 0.3s, border-color 0.3s;
+}
+a.bl-btn.bl-btn--inverse:hover {
+  border: 1px solid #7aad4d;
+  color: #7aad4d;
+  text-decoration: none;
+}
+a.bl-btn.bl-btn--secondary {
+  background: white;
+  border: 1px solid white;
+  background: rgba(203, 213, 214, 0.2);
+}
+a.bl-btn.bl-btn--secondary:hover {
+  background: rgba(146, 167, 169, 0.2);
+}
+.bl-btn-group {
+  margin-top: 2rem;
+}
+.bl-btn-group > * + * {
+  margin-top: 2rem;
+}
+.bl-full-page-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-size: cover;
+}
+.bl-bg-registration {
+  background-image: url(/public/images/business-people-1.jpg);
+}
+.bl-bg-login {
+  background-image: url(/public/images/abstract-1.jpg);
+}
+@media screen and (min-width: 768px) {
+  .bl-btn-group {
+    text-align: right;
+  }
+  .bl-btn-group > * + * {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+  .bl-btn-group .bl-btn {
+    width: unset;
+    display: inline-block;
+  }
+}
 /** UI-GRID Styles - Should probably go in widgets module? At least own .less file **/
 .ui-grid-column-menu-button-last-col {
   margin-right: 0;

@@ -6,16 +6,28 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 text-center">
-                <img class="img-responsive" src="/public/images/selling-bitcoins.png" style="max-width: 350px; margin: 0 auto;">
+            <div class="col-sm-6 text-center" style="padding: 20px 0;">
+                <img class="img-responsive" src="/public/images/selling-bitcoins.png" style="max-width: 300px; margin: 0 auto;">
             </div>
             <div class="col-sm-6">
-                <form>
-                    <input type="text" name="" style="display: block; width: 100%; padding: 10px; margin-top: 10px;" ng-model="data.name" placeholder="Name">
-                    <input type="text" name="" style="display: block; width: 100%; padding: 10px; margin-top: 10px;" ng-model="data.email" placeholder="Email">
-                    <input type="text" name="" style="display: block; width: 100%; padding: 10px; margin-top: 10px;" ng-model="data.user" placeholder="Username">
-                    <input type="text" name="" style="display: block; width: 100%; padding: 10px; margin-top: 10px;" ng-model="data.password" placeholder="Password">
-                    <input type="submit" name="" value="Sign Up" class="btn btn-primary" style="display: block; width: 100%; padding: 10px; margin-top: 10px;" ng-click="submit()">
+                <form class="bl-form">
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="text" id="name" name="name" ng-model="data.name" ng-class="{'not-empty': data.name.length > 0}">
+                        <label class="bl-form-label" for="name">Full Name</label>
+                    </span>
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="text" id="email" name="email" ng-model="data.email" ng-class="{'not-empty': data.email.length > 0}">
+                        <label class="bl-form-label" for="email">Email</label>
+                    </span>
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="text" id="username" name="username" ng-model="data.user" ng-class="{'not-empty': data.user.length > 0}">
+                        <label class="bl-form-label" for="username">Username</label>
+                    </span>
+                    <span class="bl-input-container">
+                        <input class="bl-text-input" type="password" id="password" name="password" ng-model="data.password" ng-class="{'not-empty': data.password.length > 0}">
+                        <label class="bl-form-label" for="password">Password</label>
+                    </span>
+                    <input type="submit" name="" value="Sign Up" class="bl-btn" ng-click="submit()">
                     <div ng-if="errorMessage">{{ errorMessage }}</div>
                 </form>
             </div>
@@ -55,12 +67,12 @@
         </div>
     </div>
 </div>
-<div style="padding: 48px 10px;">
+<div>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 text-center">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe title="YouTube video player" class="embed-responsive-item" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/k0HmrSfJwhU" frameborder="0" allowFullScreen style="max-width: 95%;"></iframe>
+                    <iframe title="YouTube video player" class="embed-responsive-item" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/k0HmrSfJwhU" frameborder="0" allowFullScreen></iframe>
                 </div>
             </div>
         </div>
