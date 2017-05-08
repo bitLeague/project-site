@@ -7,6 +7,7 @@ var db = require('./server/db')
 var mysql = require('mysql')
 var app = express()
 var bodyParser = require('body-parser')
+var helmet = require('helmet');
 
 // view engine setup
 app.engine('html', cons.swig)
@@ -17,6 +18,8 @@ app.set('view engine', 'html');
 app.use("/node_modules", express.static('node_modules'));
 app.use("/public", express.static('public'));
 
+// Security
+app.use(helmet());
 // request body parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
