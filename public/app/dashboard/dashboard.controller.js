@@ -10,10 +10,10 @@ angular
             $scope.orders();
             $scope.leaders();
 
-            setInterval(function() {
-                $scope.getTicker();
-                $scope.ticker = tickerService.get();
-            }, 10000);
+            // setInterval(function() {
+            //     $scope.getTicker();
+            //     $scope.ticker = tickerService.get();
+            // }, 10000);
         }
 
         $scope.getTicker = function() {

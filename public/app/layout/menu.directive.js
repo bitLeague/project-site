@@ -16,8 +16,10 @@ function blMenu($q, userService) {
             scope.logout = userService.logout;
 
             scope.$on('bl.login', function() {
-                console.log("HI", userService.get());
-                scope.user = userService.get();
+                console.log("Menu login");
+                userService.get().then(function(userData){
+                    scope.user = userData;
+                });
             });
 
             scope.$on('bl.logout', function() {

@@ -1,6 +1,7 @@
 var express = require("express");
 var app = module.exports = express();
 var db = require('../db.js')
+var passport = require('../config/passport')
 
 app.post('/register', function(req, res, next) {
     console.log('request received:', req.body);
@@ -26,17 +27,40 @@ app.post('/register', function(req, res, next) {
 
 app.post('/login', function(req, res, next) {
     console.log('request received:', req.body);
-
-    var query = db.query('select * from user where username = ? and password = ?', [req.body.user, req.body.password], function(err, result) {
+    passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.error(err);
-            return res.send(err);
-        } else if (result.length > 0) {
-            return res.send({ "user": result[0]["username"], "id": result[0]["id"], "cash": result[0]["cash"], "bitcoin": result[0]["bitcoin"], "gains": result[0]["gains"], "status": "success" });
-        } else {
-            return res.send('fail');
+            res.send({ error: info.message, err: err });
         }
-    });
+
+        if (!user) {
+            res.send({ error: info.message })
+        }
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            console.log("LOGIN SUCCESSFUL", user);
+            res.send({ "user": user["username"], "id": user["id"], "cash": user["cash"], "bitcoin": user["bitcoin"], "gains": user["gains"], "status": "success" });
+        });
+    })(req, res, next);
+});
+
+app.get('/verifyAuth', function(req, res, next) {
+    if (req.user) {
+        var user = req.user;
+        var ret = {
+            user: {
+                "user": user["username"],
+                "id": user["id"],
+                "cash": user["cash"],
+                "bitcoin": user["bitcoin"],
+                "gains": user["gains"]
+            },
+            status: "Authorized"
+        }
+
+        res.send(ret);
+    } else {
+        res.send({ error: "Not Authorized" });
+    }
 });
 
 app.post('/getUser', function(req, res, next) {

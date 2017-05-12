@@ -9,7 +9,7 @@ angular
                 method: 'POST',
                 data: $scope.data
             }).then(function(httpResponse) {
-                console.log('response:', httpResponse);
+                console.log('response:', httpResponse.data.error);
                 if (httpResponse.data.status == "success") {
                     userService.set({
                         "username": httpResponse.data.user,
@@ -19,14 +19,15 @@ angular
                         "gains": httpResponse.data.gains
                     });
                     $location.path('/dashboard');
-                } else if (httpResponse.data.error) {
+                } else {
                     $scope.errorMessage = httpResponse.data.error;
                 }
             })
         }
 
         $scope.login = function() {
-            console.log('clicked submit');
+            $scope.errorMessage = '';
+            console.log('clicked login submit');
             $http({
                 url: '/login',
                 method: 'POST',
@@ -40,12 +41,14 @@ angular
                         "cash": httpResponse.data.cash,
                         "bitcoin": httpResponse.data.bitcoin,
                         "gains": httpResponse.data.gains
-                    });
-                    utilities.createCookie('bitleague', httpResponse.data.user, 8000);
-                    console.log("COOKIE Set!");
-                    $location.path('/dashboard');
-                } else if (httpResponse.data == "fail") {
-                    $scope.errorMessage = 'Invalid username or password';
+                    }).then(function(data){
+                        console.log("User data?", data);
+                        // utilities.createCookie('bitleague', httpResponse.data.user, 8000);
+                        $location.path('/dashboard');
+                    })
+                    
+                } else {
+                    $scope.errorMessage = httpResponse.data.error || "There was an error";
                 }
             })
         }

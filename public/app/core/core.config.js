@@ -1,5 +1,6 @@
 // Define routes for the module.
-angular.module('myApp.core').config(function($routeProvider) {
+angular.module('myApp.core').config(function($routeProvider, $qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
     $routeProvider
         .when('/reports', {
             controller: 'reportsController',
