@@ -4,7 +4,12 @@ angular.module('myApp.core').config(function($routeProvider, $qProvider) {
     $routeProvider
         .when('/reports', {
             controller: 'reportsController',
-            templateUrl: '/public/reports.html'
+            templateUrl: '/public/reports.html',
+            resolve: {
+                userData: function(userService) {
+                    return userService.isAuthenticated();
+                }
+            }
         })
         .when('/login', {
             controller: 'myCtrl',

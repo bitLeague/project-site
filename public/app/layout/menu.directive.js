@@ -10,15 +10,14 @@ function blMenu($q, userService) {
 
         },
         link: function(scope, element, attrs) {
-            $q.when(userService.isAuthenticated()).then(function(data) {
-                scope.user = data;
+            $q.when(userService.isAuthenticated()).then(function(user) {
+                scope.user = user;
             });
             scope.logout = userService.logout;
 
             scope.$on('bl.login', function() {
-                console.log("Menu login");
-                userService.get().then(function(userData){
-                    scope.user = userData;
+                $q.when(userService.isAuthenticated()).then(function(user) {
+                    scope.user = user;
                 });
             });
 

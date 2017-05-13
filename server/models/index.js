@@ -43,6 +43,12 @@ app.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+app.get('/logout', function(req, res, next) {
+    console.log("Logout");
+    req.logout();
+    res.send("ok");
+});
+
 app.get('/verifyAuth', function(req, res, next) {
     if (req.user) {
         var user = req.user;
@@ -64,7 +70,7 @@ app.get('/verifyAuth', function(req, res, next) {
 });
 
 app.post('/getUser', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('getUser request received:', req.body);
 
     var query = db.query('select * from user where username = ?', [req.body.user], function(err, result) {
         if (err) {
@@ -79,7 +85,7 @@ app.post('/getUser', function(req, res, next) {
 });
 
 app.post('/buy', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('buy request received:', req.body);
     var cash = parseFloat(req.body.cash);
     var bid = parseFloat(req.body.bid);
     var bitcoin = parseInt(req.body.bitcoin);
@@ -110,7 +116,7 @@ app.post('/buy', function(req, res, next) {
 });
 
 app.post('/sell', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('sell request received:', req.body);
     var cash = parseFloat(req.body.cash);
     var ask = parseFloat(req.body.ask);
     var bitcoin = parseInt(req.body.bitcoin);
@@ -141,9 +147,10 @@ app.post('/sell', function(req, res, next) {
 });
 
 app.post('/orders', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('orders request received:', req.body);
 
     var query = db.query('select * from orders where user_id = ? order by `time` desc limit 10 ', [req.body.id], function(err, result) {
+        console.log("order result", result);
         if (err) {
             console.error(err);
             return res.send(err);
@@ -160,7 +167,7 @@ app.post('/orders', function(req, res, next) {
 });
 
 app.post('/leaders', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('leader request received:', req.body);
 
     var query = db.query('select * from user order by `gains` desc limit 10 ', function(err, result) {
         if (err) {

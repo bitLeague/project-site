@@ -23,44 +23,24 @@ function userService($rootScope, $q, $http, $location, utilities) {
     function isAuthenticated() {
         //if (userData.id) return userData;
         return $http.get('/verifyAuth').then(function(response) {
-            console.log("Is auth", response.data.user);
-            if(response.data.user){
+            if (response.data.user) {
                 return response.data.user;
             } else {
-                $location.path('/login');
+                var openPaths = ['/', '/login', '/register'];
+                var indexOfCurrent = openPaths.indexOf($location.path());
+                if(indexOfCurrent < 0){
+                    $location.path('/');
+                }
             }
         });
-        // var userCookie = utilities.getCookie('bitleague');
-
-        // if (userCookie) {
-        //     return $http({
-        //         url: '/getUser',
-        //         method: 'POST',
-        //         data: { user: userCookie }
-        //     }).then(function(httpResponse) {
-        //         if (httpResponse.data.status == "success") {
-        //             userData = {
-        //                 "username": httpResponse.data.user,
-        //                 "id": httpResponse.data.id,
-        //                 "cash": httpResponse.data.cash,
-        //                 "bitcoin": httpResponse.data.bitcoin,
-        //                 "gains": httpResponse.data.gains
-        //             };
-        //             $rootScope.$broadcast('bl.login');
-        //             return userData;
-        //         } else if (httpResponse.data == "fail") {
-        //             console.log("failed to load user with cookie");
-        //             $location.path('/login');
-        //         }
-        //     });
-        // }
     }
 
     function logout() {
         userData = {};
-        utilities.deleteCookie('bitleague');
         $rootScope.$broadcast('bl.logout');
-        $location.path('/');
+        $http.get('/logout').then(function(response) {
+            $location.path('/');
+        });
     }
 
     function set(data) {
