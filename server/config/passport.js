@@ -35,6 +35,7 @@ passport.use(
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             db.query("SELECT * FROM user WHERE username = ?",[username], function(err, rows) {
+                console.log("IN LOCAL SIGNUP query callback");
                 if (err)
                     return done(err);
                 if (rows.length) {
@@ -42,17 +43,8 @@ passport.use(
                 } else {
                     // if there is no user with that username
                     // create the user
-                    var newUserMysql = {
-                        username: username,
-                        password: password,  // use the generateHash function in our user model
-                    };
-
-                    var insertQuery = "INSERT INTO users ( username, password ) values (?,?)";
-
-                    db.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
-                        newUserMysql.id = rows.insertId;
-
-                        return done(null, newUserMysql);
+                    db.query('insert into user set name = ?, email = ?, username = ?, password = ?', [req.body.name, req.body.email, req.body.user, req.body.password], function(err, rows) {
+                        return done(null, rows.insertId);
                     });
                 }
             });
@@ -60,7 +52,6 @@ passport.use(
     );
 
 passport.serializeUser(function(user, done) {
-    console.log("serializeUser?");
     done(null, user.id);
 });
 
