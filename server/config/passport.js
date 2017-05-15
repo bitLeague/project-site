@@ -35,7 +35,6 @@ passport.use(
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             db.query("SELECT * FROM user WHERE username = ?",[username], function(err, rows) {
-                console.log("IN LOCAL SIGNUP query callback");
                 if (err)
                     return done(err);
                 if (rows.length) {
