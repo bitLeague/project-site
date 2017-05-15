@@ -24,17 +24,17 @@ passport.use(new LocalStrategy({
 }));
 
 passport.use(
-        'local-signup',
-        new LocalStrategy({
+    'local-signup',
+    new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
-            usernameField : 'user',
-            passwordField : 'password',
-            passReqToCallback : true // allows us to pass back the entire request to the callback
+            usernameField: 'user',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            db.query("SELECT * FROM user WHERE username = ?",[username], function(err, rows) {
+            db.query("SELECT * FROM user WHERE username = ?", [username], function(err, rows) {
                 if (err)
                     return done(err);
                 if (rows.length) {
@@ -48,16 +48,16 @@ passport.use(
                 }
             });
         })
-    );
+);
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-        db.query("SELECT * FROM user WHERE id = ? ",[id], function(err, rows){
-            done(err, rows[0]);
-        });
+    db.query("SELECT * FROM user WHERE id = ? ", [id], function(err, rows) {
+        done(err, rows[0]);
     });
+});
 
 module.exports = passport
