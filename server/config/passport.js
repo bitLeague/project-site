@@ -15,7 +15,7 @@ passport.use(new LocalStrategy({
     users.findByUsernameWithPass(username, function(user, err) {
         if (err) return done(err);
         if (!user) return done(null, false, { error: 'Incorrect username.' });
-        if (!bcrypt.compareSync(password, user.password)) {
+        if (bcrypt.compareSync(password, user.password)) {
             return done(null, user);
         } else {
             return done(null, false, { error: 'Incorrect password.' });
