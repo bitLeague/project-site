@@ -15,7 +15,13 @@ passport.use(new LocalStrategy({
     users.findByUsernameWithPass(username, function(user, err) {
         if (err) return done(err);
         if (!user) return done(null, false, { error: 'Incorrect username.' });
-        if (bcrypt.compareSync(password, user.password)) {
+        var pwCorrect = false;
+        try {
+            pwCorrect = bcrypt.compareSync(password, user.password);
+        } catch (e) {
+            return done(null, false, { error: 'Not a hashed password. Please reset' });
+        }
+        if (pwCorrect) {
             return done(null, user);
         } else {
             return done(null, false, { error: 'Incorrect password.' });
