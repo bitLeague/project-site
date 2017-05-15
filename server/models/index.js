@@ -18,7 +18,12 @@ app.post('/register', function(req, res, next) {
                     console.error(err);
                     return res.send(err);
                 } else {
-                    return res.send({ "user": req.body.user, "id": result.insertId, "cash": 100000.00, "bitcoin": 0, "gains": 0.00, "status": "success" });
+                    var user = { "user": req.body.user, "id": result.insertId, "cash": 100000.00, "bitcoin": 0, "gains": 0.00};
+                    req.logIn(user, function(err) {
+                        if (err) return next(err);
+                        user.status = "success";
+                        res.send(user);
+                    });
                 }
             });
         }

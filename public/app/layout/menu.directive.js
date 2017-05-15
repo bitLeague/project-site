@@ -17,7 +17,9 @@ function blMenu($q, userService) {
 
             scope.$on('bl.login', function() {
                 $q.when(userService.isAuthenticated()).then(function(user) {
+                    console.log("LOGIN", user);
                     scope.user = user;
+                    console.log("LOGIN scope", scope.user);
                 });
             });
 
