@@ -57,8 +57,6 @@ app.use(passport.session());
 app.use(routes)
 app.use(models)
 
-var users = require('./server/services/users')
-
 let port = process.env.PORT || 8000;
 app.listen(port, function () {
   console.log('Listening on port ' + port);

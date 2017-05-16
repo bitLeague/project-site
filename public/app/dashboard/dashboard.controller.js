@@ -1,6 +1,6 @@
 angular
     .module('myApp.dashboard')
-    .controller('dashboardController', function($scope, $http, $location, $alert, userService, tickerService, reportService, utilities, userData) {
+    .controller('dashboardController', function($scope, $http, $location, $alert, $interval, userService, tickerService, reportService, utilities, userData) {
         $scope.user = userData;
 
 
@@ -10,10 +10,10 @@ angular
             $scope.orders();
             $scope.leaders();
 
-            // setInterval(function() {
-            //     $scope.getTicker();
-            //     $scope.ticker = tickerService.get();
-            // }, 10000);
+            $interval(function() {
+                $scope.getTicker();
+                $scope.ticker = tickerService.get();
+            }, 10000);
         }
 
         $scope.getTicker = function() {
