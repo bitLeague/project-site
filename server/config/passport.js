@@ -15,17 +15,15 @@ passport.use(new LocalStrategy({
     users.findByUsernameWithPass(username, function(user, err) {
         if (err) return done(err);
         if (!user) return done(null, false, { error: 'Incorrect username.' });
-        var pwCorrect = false;
-        try {
-            pwCorrect = bcrypt.compareSync(password, user.password);
-        } catch (e) {
-            return done(null, false, { error: 'Not a hashed password. Please reset' });
-        }
-        if (pwCorrect) {
-            return done(null, user);
-        } else {
-            return done(null, false, { error: 'Incorrect password.' });
-        }
+        users.comparePassword(password, user.password, function(isMatch) {
+            console.log("checking password is match", isMatch);
+            if (isMatch) {
+                return done(null, user);
+            } else {
+                return done(null, false, { error: 'Incorrect password.' });
+            }
+        });
+
     });
 }));
 
@@ -48,9 +46,12 @@ passport.use(
                 } else {
                     // if there is no user with that username
                     // create the user
-                    db.query('insert into user set name = ?, email = ?, username = ?, password = ?', [req.body.name, req.body.email, req.body.user, bcrypt.hashSync(req.body.password, null, null)], function(err, rows) {
-                        return done(null, rows.insertId);
+                    users.saltPassword(req.body.password, function(hash) {
+                        db.query('insert into user set name = ?, email = ?, username = ?, password = ?', [req.body.name, req.body.email, req.body.user, hash], function(err, rows) {
+                            return done(null, rows.insertId);
+                        });
                     });
+
                 }
             });
         })

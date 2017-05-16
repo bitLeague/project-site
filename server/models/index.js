@@ -26,7 +26,7 @@ app.post('/register', function(req, res, next) {
 app.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
-            return res.send({ error: info.message, err: err });
+            return res.send(err);
         }
 
         if (!user) {
