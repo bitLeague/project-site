@@ -12,10 +12,26 @@ var bodyParser = require('body-parser')
 var app = express()
 // AUTH
 var session = require('express-session')
-var mongoose = require('mongoose')
-var nodemailer = require('nodemailer')
+var MySQLStore = require('express-mysql-session')(session);
+var storeOptions = {
+    checkExpirationInterval: 900000,// How frequently expired sessions will be cleared; milliseconds. 
+    expiration: 86400000,// The maximum age of a valid session; milliseconds. 
+    createDatabaseTable: true,// Whether or not to create the sessions database table, if one does not already exist. 
+    connectionLimit: 1,// Number of connections when creating a connection pool 
+    schema: {
+        tableName: 'sessions',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+};
+var sessionStore = new MySQLStore({}/* session store options */, db);
 var passport = require('./server/config/passport')
 var helmet = require('helmet')
+
+var nodemailer = require('nodemailer')
 
 // view engine setup
 app.engine('html', cons.swig)
@@ -33,7 +49,7 @@ app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(session({ secret: 'bitleague is awesome', resave: false, saveUninitialized: false })) // Should be in env var
+app.use(session({ secret: 'bitleague is awesome', store: sessionStore, resave: false, saveUninitialized: false })) // Secret Should be in env var
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -42,14 +58,6 @@ app.use(routes)
 app.use(models)
 
 var users = require('./server/services/users')
-
-var user = users.findByUsernameWithPass('testy', function(user, err) {
-    if(err) {
-      console.log("ERRORf")
-    } else {
-      console.log("FOUND: ", user.username, user.password)
-    }
-})
 
 let port = process.env.PORT || 8000;
 app.listen(port, function () {
