@@ -10,11 +10,15 @@ angular
             $scope.orders();
             $scope.leaders();
 
-            $interval(function() {
+            $scope.tickerInterval = $interval(function() {
                 $scope.getTicker();
                 $scope.ticker = tickerService.get();
             }, 10000);
         }
+
+        $scope.$on("$destroy", function() {
+            $interval.cancel($scope.tickerInterval); // Stop interval when dashboardController unloaded
+        });
 
         $scope.getTicker = function() {
             $http({
