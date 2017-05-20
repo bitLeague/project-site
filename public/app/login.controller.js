@@ -49,4 +49,13 @@ angular
                 }
             })
         }
+
+        $scope.fbLogin = function() {
+            $http.get('/auth/facebook').then(function(resp){
+                console.log("HI", resp);
+                console.log("HI FACEBOOK");
+            }).catch(function(){
+                console.log("FUCK")
+            });
+        }
     });

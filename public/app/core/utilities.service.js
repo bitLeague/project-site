@@ -1,6 +1,17 @@
 angular
     .module('myApp.core')
-    .factory('utilities', utilities);
+    .factory('utilities', utilities)
+    .directive('redir', ['$http', function($http) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                element.on('click', function(e) {
+                    e.preventDefault();
+                    window.location = attrs.href;
+                });
+            }
+        }
+    }]);
 
 utilities.$inject = [];
 

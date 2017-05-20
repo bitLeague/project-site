@@ -23,6 +23,15 @@ app.post('/register', function(req, res, next) {
     })(req, res, next);
 });
 
+app.get('/auth/facebook',
+  passport.authenticate('facebook', { scope : 'email' }));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+            successRedirect : '/#!/dashboard',
+            failureRedirect : '/#!/login'
+}));
+
 app.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
