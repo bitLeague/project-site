@@ -1,6 +1,6 @@
 angular
     .module('myApp.dashboard')
-    .controller('dashboardController', function($scope, $http, $location, $alert, userService, tickerService, reportService, utilities, userData) {
+    .controller('dashboardController', function($scope, $http, $location, $alert, $interval, userService, tickerService, reportService, utilities, userData) {
         $scope.user = userData;
 
 
@@ -10,11 +10,15 @@ angular
             $scope.orders();
             $scope.leaders();
 
-            setInterval(function() {
+            $scope.tickerInterval = $interval(function() {
                 $scope.getTicker();
                 $scope.ticker = tickerService.get();
             }, 10000);
         }
+
+        $scope.$on("$destroy", function() {
+            $interval.cancel($scope.tickerInterval); // Stop interval when dashboardController unloaded
+        });
 
         $scope.getTicker = function() {
             $http({
@@ -75,14 +79,14 @@ angular
                 }).then(function(httpResponse) {
                     console.log('buy response:', httpResponse);
                     if (httpResponse.data.status == "success") {
-                        userService.set({
+                        $scope.user = {
                             "username": $scope.user.username,
                             "id": $scope.user.id,
                             "cash": httpResponse.data.cash,
                             "bitcoin": httpResponse.data.bitcoin,
                             "gains": httpResponse.data.gains
-                        });
-                        $scope.user = userService.get();
+                        };
+                        userService.set($scope.user);
                         $scope.orders();
                         $scope.leaders();
                         var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You bought bitcoins.', placement: 'top', type: 'success', show: true });
@@ -104,16 +108,15 @@ angular
                     method: 'POST',
                     data: { "quantity": $scope.quantity, "ask": $scope.ticker.ask, "id": $scope.user.id, "cash": $scope.user.cash, "bitcoin": $scope.user.bitcoin }
                 }).then(function(httpResponse) {
-                    console.log('sell response:', httpResponse);
                     if (httpResponse.data.status == "success") {
-                        userService.set({
+                        $scope.user = {
                             "username": $scope.user.username,
                             "id": $scope.user.id,
                             "cash": httpResponse.data.cash,
                             "bitcoin": httpResponse.data.bitcoin,
                             "gains": httpResponse.data.gains
-                        });
-                        $scope.user = userService.get();
+                        };
+                        userService.set($scope.user);
                         $scope.orders();
                         $scope.leaders();
                         var myAlert = $alert({ animation: 'am-fade-and-slide-top', container: '#alert-box', duration: 3, title: 'Success!', content: 'You sold bitcoins.', placement: 'top', type: 'success', show: true });
@@ -133,7 +136,6 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
-                console.log('orders response:', httpResponse);
                 $scope.orderGridOptions = {
                     columnDefs: [{
                         field: 'time',
@@ -160,7 +162,6 @@ angular
                     }, ]
                 };
                 $scope.orderGridOptions.data = httpResponse.data.orders;
-                console.log("HI", $scope.orderGridOptions.data);
             });
         }
 
@@ -169,7 +170,6 @@ angular
                 url: '/leaders',
                 method: 'POST'
             }).then(function(httpResponse) {
-                console.log('leaders response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     $scope.leaderGridOptions = {
                         columnDefs: [{
@@ -195,7 +195,6 @@ angular
                 method: 'POST',
                 data: { "id": $scope.user.id }
             }).then(function(httpResponse) {
-                console.log('user transactions response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("Your Transactions", httpResponse.data.orders);
@@ -211,7 +210,6 @@ angular
                 url: '/systemtransactionreport',
                 method: 'POST'
             }).then(function(httpResponse) {
-                console.log('system transactions response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("System's Recent Transactions", httpResponse.data.orders);
@@ -227,7 +225,6 @@ angular
                 url: '/leadersreport',
                 method: 'POST',
             }).then(function(httpResponse) {
-                console.log('leaderboardReport response:', httpResponse);
                 if (httpResponse.data.status == "success") {
                     reportService.set("", []);
                     reportService.set("Full Leaderboard", httpResponse.data.leaders);

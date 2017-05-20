@@ -1,46 +1,71 @@
 var express = require("express");
 var app = module.exports = express();
 var db = require('../db.js')
+var passport = require('../config/passport')
 
 app.post('/register', function(req, res, next) {
-    console.log('request received:', req.body);
-
-    var check_query = db.query('select * from user where username = ?', [req.body.user], function(err, result) {
+    if (!req.body.user) return res.send({ error: "Enter a username" });
+    if (!req.body.password) return res.send({ error: "Enter a password" });
+    passport.authenticate('local-signup', function(err, userId, info) {
         if (err) {
-            console.error(err);
-            return res.send(err);
-        } else if (result.length > 0) {
-            return res.send({ "error": "Username already exists. Please choose a different username." });
-        } else {
-            var query = db.query('insert into user set name = ?, email = ?, username = ?, password = ?', [req.body.name, req.body.email, req.body.user, req.body.password], function(err, result) {
-                if (err) {
-                    console.error(err);
-                    return res.send(err);
-                } else {
-                    return res.send({ "user": req.body.user, "id": result.insertId, "cash": 100000.00, "bitcoin": 0, "gains": 0.00, "status": "success" });
-                }
-            });
+            return res.send({ error: info.message, err: err });
         }
-    });
+
+        if (!userId) {
+            return res.send({ error: info.error });
+        }
+        var user = { "user": req.body.user, "id": userId, "cash": 100000.00, "bitcoin": 0, "gains": 0.00 };
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            user.status = "success";
+            return res.send(user);
+        });
+    })(req, res, next);
 });
 
 app.post('/login', function(req, res, next) {
-    console.log('request received:', req.body);
-
-    var query = db.query('select * from user where username = ? and password = ?', [req.body.user, req.body.password], function(err, result) {
+    passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.error(err);
             return res.send(err);
-        } else if (result.length > 0) {
-            return res.send({ "user": result[0]["username"], "id": result[0]["id"], "cash": result[0]["cash"], "bitcoin": result[0]["bitcoin"], "gains": result[0]["gains"], "status": "success" });
-        } else {
-            return res.send('fail');
         }
-    });
+
+        if (!user) {
+            return res.send({ error: info.message })
+        }
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            return res.send({ "user": user["username"], "id": user["id"], "cash": user["cash"], "bitcoin": user["bitcoin"], "gains": user["gains"], "status": "success" });
+        });
+    })(req, res, next);
+});
+
+app.get('/logout', function(req, res, next) {
+    req.logout();
+    return res.send("ok");
+});
+
+app.get('/verifyAuth', function(req, res, next) {
+    if (req.user) {
+        var user = req.user;
+        var ret = {
+            user: {
+                "user": user["username"],
+                "id": user["id"],
+                "cash": user["cash"],
+                "bitcoin": user["bitcoin"],
+                "gains": user["gains"]
+            },
+            status: "Authorized"
+        }
+
+        return res.send(ret);
+    } else {
+        return res.send({ error: "Not Authorized" });
+    }
 });
 
 app.post('/getUser', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('getUser request received:', req.body);
 
     var query = db.query('select * from user where username = ?', [req.body.user], function(err, result) {
         if (err) {
@@ -55,7 +80,7 @@ app.post('/getUser', function(req, res, next) {
 });
 
 app.post('/buy', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('buy request received:', req.body);
     var cash = parseFloat(req.body.cash);
     var bid = parseFloat(req.body.bid);
     var bitcoin = parseInt(req.body.bitcoin);
@@ -86,7 +111,7 @@ app.post('/buy', function(req, res, next) {
 });
 
 app.post('/sell', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('sell request received:', req.body);
     var cash = parseFloat(req.body.cash);
     var ask = parseFloat(req.body.ask);
     var bitcoin = parseInt(req.body.bitcoin);
@@ -117,9 +142,10 @@ app.post('/sell', function(req, res, next) {
 });
 
 app.post('/orders', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('orders request received:', req.body);
 
     var query = db.query('select * from orders where user_id = ? order by `time` desc limit 10 ', [req.body.id], function(err, result) {
+        console.log("order result", result);
         if (err) {
             console.error(err);
             return res.send(err);
@@ -136,7 +162,7 @@ app.post('/orders', function(req, res, next) {
 });
 
 app.post('/leaders', function(req, res, next) {
-    console.log('request received:', req.body);
+    console.log('leader request received:', req.body);
 
     var query = db.query('select * from user order by `gains` desc limit 10 ', function(err, result) {
         if (err) {
